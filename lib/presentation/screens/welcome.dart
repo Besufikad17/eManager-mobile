@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cleanarchdemo/config/router/app_router.dart';
 import 'package:cleanarchdemo/presentation/components/button.dart';
 import 'package:cleanarchdemo/utils/resources/colors.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,9 @@ class WelcomePage extends StatelessWidget {
                     fgcolor: "#F0922E",
                     width: 300,
                     height: 40,
-                    onPressed: () {}),
+                    onPressed: () {
+                      context.router.push(const LoginRoute());
+                    }),
                   const SizedBox(
                     height: 30,
                   ),
