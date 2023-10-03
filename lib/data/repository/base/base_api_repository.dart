@@ -15,12 +15,13 @@ abstract class BaseApiRepository {
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
       } else {
-        throw DioError(
+        throw DioException(
           response: httpResponse.response,
           requestOptions: httpResponse.response.requestOptions,
+          message: httpResponse.response.statusMessage
         );
       }  
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       return DataFailed(error);
     }
   } 

@@ -1,8 +1,11 @@
 import 'package:cleanarchdemo/config/router/app_router.dart';
+import 'package:cleanarchdemo/locator.dart';
 import 'package:cleanarchdemo/utils/constants/strings.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  await initDependency();
+  
   runApp(const MyApp());
 }
 

@@ -14,11 +14,11 @@ abstract class UserApiService {
 
   @POST('/user/signup')
   Future<HttpResponse<UserSignUpResponse>> signup({
-    @Body() UserSignUpRequest request
+    @Body() required UserSignUpRequest request
   });
 
   @POST('/user/login')
   Future<HttpResponse<UserLoginResponse>> login({
-    @Body() UserLoginRequest request 
+    @Body() required UserLoginRequest request 
   });
 }
