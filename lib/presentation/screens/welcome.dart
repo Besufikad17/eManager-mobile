@@ -60,7 +60,7 @@ class WelcomePage extends StatelessWidget {
                     width: 300,
                     height: 40,
                     onPressed: () {
-                      context.router.push(const LoginRoute());
+                      context.router.push(LoginRoute());
                     }),
                   const SizedBox(
                     height: 30,
