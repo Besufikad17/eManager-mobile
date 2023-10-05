@@ -1,4 +1,4 @@
-import 'dart:io' show HttpStatus;
+import 'package:cleanarchdemo/domain/models/responses/user_login_response.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:retrofit/retrofit.dart';
@@ -9,16 +9,17 @@ abstract class BaseApiRepository {
   @protected
   Future<DataState<T>> getStateOf<T>({
     required Future<HttpResponse<T>> Function() request,
+    required String errorMessage
   }) async {
     try {
       final httpResponse = await request();
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
+      if (httpResponse.response.statusCode == 201) {
         return DataSuccess(httpResponse.data);
       } else {
         throw DioException(
           response: httpResponse.response,
           requestOptions: httpResponse.response.requestOptions,
-          message: httpResponse.response.statusMessage
+          message: errorMessage
         );
       }  
     } on DioException catch (error) {

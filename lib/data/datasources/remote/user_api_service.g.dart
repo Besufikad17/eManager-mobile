@@ -13,7 +13,7 @@ class _UserApiService implements UserApiService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://localhost:3000/api';
+    baseUrl ??= 'http://localhost:8000/api';
   }
 
   final Dio _dio;
@@ -26,7 +26,8 @@ class _UserApiService implements UserApiService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = request;
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toMap());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<UserSignUpResponse>>(Options(
       method: 'POST',
@@ -35,7 +36,7 @@ class _UserApiService implements UserApiService {
     )
             .compose(
               _dio.options,
-              '/user/signup',
+              '/signup',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -55,7 +56,8 @@ class _UserApiService implements UserApiService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = request;
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toMap());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<UserLoginResponse>>(Options(
       method: 'POST',
@@ -64,7 +66,7 @@ class _UserApiService implements UserApiService {
     )
             .compose(
               _dio.options,
-              '/user/login',
+              '/login',
               queryParameters: queryParameters,
               data: _data,
             )

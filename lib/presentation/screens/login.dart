@@ -52,16 +52,39 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  void _buildError(BuildContext context, String message) {
-    showDialog(
-      context: context, 
-      builder: (BuildContext context) {
-        return const MyAlert(
-          title: "Invalid inputs", 
-          type: AlertType.error, 
-          body: Text("Please enter valid inputs!!")
-        );
-      }
+  void _buildError(BuildContext context, String message) async {
+    await Future.delayed(const Duration(microseconds: 1));
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: SizedBox(
+          height: 30, // Adjust the height as needed
+          child: Row(
+            children: [
+              const Icon(Icons.error, color: Colors.white),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(color: Colors.white),
+                  overflow: TextOverflow.visible,
+                ),
+              ),
+            ],
+          ),
+        ),
+        backgroundColor: Colors.blue,
+        duration: const Duration(seconds: 3),
+        action: SnackBarAction(
+          label: 'Dismiss',
+          textColor: Colors.white,
+          backgroundColor: Colors.black,
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            context.read<UserBloc>().add(const UserLoginLoading());
+          },
+        ),
+      ),
     );
   }
 

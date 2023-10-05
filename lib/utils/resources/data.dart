@@ -3,7 +3,7 @@ bool isVlaidEmail(String email) {
 }
 
 bool isValidPassword(String password) {
-  if(password.length > 8 && password.length < 15) {
+  if(password.length >= 6 && password.length < 15) {
     return true;
   }else {
     return false;

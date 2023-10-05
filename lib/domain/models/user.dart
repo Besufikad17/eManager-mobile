@@ -1,5 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+    part 'user.g.dart';
+
+@JsonSerializable()
 class User extends Equatable {
   final int? id;
   final String? fname;
@@ -19,7 +23,7 @@ class User extends Equatable {
     this.updatedAt
   });
 
-  factory User.fromJSON(Map<String, dynamic> json) {
+  factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
       fname: json['fname'],

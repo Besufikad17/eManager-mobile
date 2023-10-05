@@ -12,12 +12,12 @@ part 'user_api_service.g.dart';
 abstract class UserApiService {
   factory UserApiService(Dio dio, {String baseUrl}) = _UserApiService;
 
-  @POST('/user/signup')
+  @POST('/signup')
   Future<HttpResponse<UserSignUpResponse>> signup({
     @Body() required UserSignUpRequest request
   });
 
-  @POST('/user/login')
+  @POST('/login')
   Future<HttpResponse<UserLoginResponse>> login({
     @Body() required UserLoginRequest request 
   });

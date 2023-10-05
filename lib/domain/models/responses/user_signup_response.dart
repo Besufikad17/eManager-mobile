@@ -1,6 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:cleanarchdemo/domain/models/user.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'user_signup_response.g.dart';
+
+@JsonSerializable()
 class UserSignUpResponse extends Equatable {
   final User user;
   final String token;
