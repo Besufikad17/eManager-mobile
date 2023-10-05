@@ -6,6 +6,7 @@ class MyText extends StatelessWidget {
   final String text;
   final double size;
   bool isBold;
+  bool isUnderline;
   double width;
   String color;
 
@@ -14,6 +15,7 @@ class MyText extends StatelessWidget {
     required this.text,
     required this.size,
     this.isBold = false,
+    this.isUnderline = false,
     this.width = 0,
     this.color = "#000000"
   });
@@ -24,6 +26,7 @@ class MyText extends StatelessWidget {
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontSize: size,
+        decoration: isUnderline ? TextDecoration.underline : TextDecoration.none,
         fontWeight: isBold ? FontWeight.w600 : FontWeight.normal,
         color: getColorFromHex(color),
       ),

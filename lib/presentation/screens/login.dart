@@ -6,8 +6,9 @@ import 'package:cleanarchdemo/presentation/bloc/user_bloc.dart';
 import 'package:cleanarchdemo/presentation/components/alert.dart';
 import 'package:cleanarchdemo/presentation/components/bazier.dart';
 import 'package:cleanarchdemo/presentation/components/button.dart';
+import 'package:cleanarchdemo/presentation/components/rich_text.dart';
+import 'package:cleanarchdemo/presentation/components/text.dart';
 import 'package:cleanarchdemo/presentation/components/text_field.dart';
-import 'package:cleanarchdemo/utils/resources/colors.dart';
 import 'package:cleanarchdemo/utils/resources/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -95,27 +96,21 @@ class LoginPage extends StatelessWidget {
           const SizedBox(
             height: 200,
           ),
-          RichText(
-            text: TextSpan(
-              style: TextStyle(
-                color: getColorFromHex("#F0922E")
-              ),
+          MyRichText(
+              primaryColor: "#F0922E",
+              baseFontSize: 26,
               children: [
-                TextSpan(
-                  text: "Clean",
-                  style: TextStyle(
-                    color: getColorFromHex("#000000"), 
-                    fontSize: 26
-                  ),
+                MyText(
+                  text: "Log",
+                  size: 26,
+                  color: "#000000",
                 ),
-                const TextSpan(
-                  text: "Arch",
-                  style: TextStyle(
-                    fontSize: 26
-                  ),
-                ),
+                MyText(
+                    text: "in",
+                    size: 26,
+                    color: "#F0922E",
+                )
               ]
-            ),
           ),
           const SizedBox(
             height: 50,
@@ -175,6 +170,18 @@ class LoginPage extends StatelessWidget {
               }
             }
           ),
+          const SizedBox(height: 20,),
+          GestureDetector(
+            onTap: () {
+              context.router.push(const SignUpRoute());
+            },
+            child: MyText(
+                text: "Dont have account?",
+                size: 12,
+                color: "#F0922E",
+                isUnderline: true,
+            ),
+          )
         ]
       ),
     );

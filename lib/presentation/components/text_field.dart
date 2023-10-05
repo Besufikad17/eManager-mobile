@@ -39,7 +39,7 @@ class MyTextField extends HookWidget {
     final errorMsg = useState("");
 
     return Padding(
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(10),
       child:  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -77,7 +77,7 @@ class MyTextField extends HookWidget {
               onChanged: (query) {
                 if (query.isEmpty) {
                   if(type == "password") {
-                    errorMsg.value = 'Password length must be between 8 and 15';
+                    errorMsg.value = 'Password length must be between 6 and 15';
                   }else {
                     errorMsg.value = 'Please enter $type';
                   }
