@@ -173,7 +173,7 @@ class LoginPage extends StatelessWidget {
           const SizedBox(height: 20,),
           GestureDetector(
             onTap: () {
-              context.router.push(const SignUpRoute());
+              context.router.push(SignUpRoute());
             },
             child: MyText(
                 text: "Dont have account?",

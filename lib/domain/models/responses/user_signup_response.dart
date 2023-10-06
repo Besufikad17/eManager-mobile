@@ -12,7 +12,7 @@ class UserSignUpResponse extends Equatable {
   const UserSignUpResponse(this.user, this.token);
 
   factory UserSignUpResponse.fromMap(Map<String, dynamic> map) {
-    return UserSignUpResponse(map['user'], map['token']);
+    return UserSignUpResponse(User.fromJson(map['user']), map['token']);
   }
 
   @override

@@ -7,6 +7,11 @@ bool isValidPhoneNumber(String phoneNumber) {
   return  RegExp(pattern).hasMatch(phoneNumber);
 }
 
+bool isValidFullName(String fullName) {
+  String pattern = r'^[a-z A-Z,.\-]+$';
+  return RegExp(pattern).hasMatch(fullName);
+}
+
 bool isValidPassword(String password) {
   if(password.length >= 6 && password.length < 15) {
     return true;

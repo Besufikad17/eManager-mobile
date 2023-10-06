@@ -74,7 +74,7 @@ class WelcomePage extends StatelessWidget {
                     width: 300,
                     height: 40,
                     onPressed: () {
-                      context.router.push(const SignUpRoute());
+                      context.router.push(SignUpRoute());
                     }
                   ),
               ],
