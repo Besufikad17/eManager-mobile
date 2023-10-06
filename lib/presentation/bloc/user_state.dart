@@ -13,8 +13,9 @@ final class UserInitial extends UserState {
 
 final class UserLoaded extends UserState {
   final User user;
+  final String token;
 
-  const UserLoaded(this.user);
+  const UserLoaded(this.user, this.token);
 
   @override
   List<Object> get props => [user];
