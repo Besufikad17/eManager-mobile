@@ -126,7 +126,7 @@ class LoginPage extends StatelessWidget {
             borderColor: "#000000",
             enabledBorderWidth: 1,
             focusedBorderWidth: 1.5,
-            regexChecker: isVlaidEmail,
+            regexChecker: isValidEmail,
             textEditingController: emailTextField,
           ),
           MyTextField(
@@ -154,7 +154,7 @@ class LoginPage extends StatelessWidget {
             width: 300,
             height: 40,
             onPressed: () {
-              if(isVlaidEmail(emailTextField.text) && isValidPassword(passwordTextField.text)) {
+              if(isValidEmail(emailTextField.text) && isValidPassword(passwordTextField.text)) {
                 bloc.add(UserLoginEvent(emailTextField.text, passwordTextField.text));
               }else {
                 showDialog(

@@ -1,4 +1,3 @@
-import 'package:cleanarchdemo/domain/models/responses/user_login_response.dart';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:retrofit/retrofit.dart';

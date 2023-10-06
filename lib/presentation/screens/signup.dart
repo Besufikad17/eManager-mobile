@@ -70,7 +70,7 @@ class SignUpPage extends StatelessWidget {
                   MyTextField(
                       label: "Email",
                       placeholder: "JohnDoe@gmail.com",
-                      type: "text",
+                      type: "email",
                       fontSize: 14,
                       height: 40,
                       width: 300,
@@ -78,12 +78,13 @@ class SignUpPage extends StatelessWidget {
                       borderColor: "#000000",
                       enabledBorderWidth: 1,
                       focusedBorderWidth: 1.5,
-                      textEditingController: emailTextField
+                      textEditingController: emailTextField,
+                      regexChecker: isValidEmail,
                   ),
                   MyTextField(
                       label: "Phone Number",
-                      placeholder: "09xxxxxx",
-                      type: "text",
+                      placeholder: "2519xxxxxx",
+                      type: "phone number",
                       fontSize: 14,
                       height: 40,
                       width: 300,
@@ -91,7 +92,8 @@ class SignUpPage extends StatelessWidget {
                       borderColor: "#000000",
                       enabledBorderWidth: 1,
                       focusedBorderWidth: 1.5,
-                      textEditingController: phoneNumberTextField
+                      textEditingController: phoneNumberTextField,
+                      regexChecker: isValidPhoneNumber,
                   ),
                   MyTextField(
                       label: "Password",
@@ -104,7 +106,8 @@ class SignUpPage extends StatelessWidget {
                       borderColor: "#000000",
                       enabledBorderWidth: 1,
                       focusedBorderWidth: 1.5,
-                      textEditingController: passwordTextField
+                      textEditingController: passwordTextField,
+                      regexChecker: isValidPassword,
                   ),
                   const SizedBox(
                     height: 20,
@@ -117,7 +120,7 @@ class SignUpPage extends StatelessWidget {
                       width: 300,
                       height: 40,
                       onPressed: () {
-                        if(isVlaidEmail(emailTextField.text) && isValidPassword(passwordTextField.text)) {
+                        if(isValidEmail(emailTextField.text) && isValidPassword(passwordTextField.text)) {
 
                         }else {
                           showDialog(

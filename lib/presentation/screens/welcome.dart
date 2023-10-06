@@ -73,7 +73,9 @@ class WelcomePage extends StatelessWidget {
                     borderColor: "#ffffff",
                     width: 300,
                     height: 40,
-                    onPressed: () {}
+                    onPressed: () {
+                      context.router.push(const SignUpRoute());
+                    }
                   ),
               ],
             ),

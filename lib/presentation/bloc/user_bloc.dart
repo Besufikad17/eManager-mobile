@@ -24,7 +24,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       if(response is DataSuccess) {
         emit(UserLoaded(response.data!.user!));
       }else if(response is DataFailed) {
-        emit(UserError(response.error!.response!.data['message'].toString()));
+        emit(UserError(response.error!.message));
       }
     });
 
