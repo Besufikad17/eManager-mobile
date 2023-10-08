@@ -8,10 +8,7 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   const HomePage({
     super.key,
-    required this.user
   });
-
-  final User user;
 
   Future<String?> getToken() async {
     return locator<SecureStorageImpl>().getData("token");
@@ -25,7 +22,6 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 50,),
-            Text(user.toString()),
             FutureBuilder(
                 future: getToken(),
                 builder: (BuildContext context, snapshot) {

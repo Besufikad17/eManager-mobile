@@ -44,7 +44,7 @@ class SignUpPage extends StatelessWidget {
                     return _buildForm(context, context.read<UserBloc>());
                   }else if(state is UserLoaded) {
                     locator<SecureStorageImpl>().storage!.write(key: "token", value: state.token);
-                    context.router.push(HomeRoute(user: state.user));
+                    context.router.push(HomeRoute());
                   }else if(state is UserError) {
                     _buildError(context, state.message!);
                   }

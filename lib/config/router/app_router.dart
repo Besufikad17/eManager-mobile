@@ -12,15 +12,15 @@ part 'app_router.gr.dart';
 
 @AutoRouterConfig()
 class AppRouter extends _$AppRouter {
+  AppRouter(this.isLoggedIn);
+  final bool isLoggedIn;
 
-  bool isLoggedIn = locator<SecureStorageImpl>().storage!.containsKey(key: "token");
-  
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(page: WelcomeRoute.page, initial: isLoggedIn),
+    AutoRoute(page: WelcomeRoute.page, initial: !isLoggedIn),
     AutoRoute(page: LoginRoute.page),
     AutoRoute(page: SignUpRoute.page),
-    AutoRoute(page: HomeRoute.page)
+    AutoRoute(page: HomeRoute.page, initial: isLoggedIn)
   ];
 }
-final appRouter = AppRouter();
+
