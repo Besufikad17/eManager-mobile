@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cleanarchdemo/data/repository/local_storage_repository_impl.dart';
 import 'package:cleanarchdemo/locator.dart';
 import 'package:cleanarchdemo/presentation/components/app_bar.dart';
+import 'package:cleanarchdemo/utils/resources/colors.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -10,8 +11,8 @@ class HomePage extends StatelessWidget {
     super.key,
   });
 
-  String? getToken() {
-    return locator<LocalStorageImpl>().getData("token");
+  Future<String> getToken() async {
+    return (await locator<LocalStorageRepositoryImpl>().getData())!.token;
   }
 
   @override
@@ -22,14 +23,25 @@ class HomePage extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(100),
         child: MyAppBar(
-          content: Container(),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.person),
+              color: getColorFromHex("#000000"),
+              onPressed: () {}
+            )
+          ],
         ),
       ),
       body: Center(
         child: Column(
           children: [
             const SizedBox(height: 50,),
-            token != null ? Text(token) : const Text("No token!!")
+            FutureBuilder(
+              future: getToken(), 
+              builder: ((BuildContext context, snapshot) {
+                return Text(snapshot.data ?? "no token!!");
+              })
+            )
           ],
         ),
       ),

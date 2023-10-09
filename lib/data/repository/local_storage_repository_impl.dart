@@ -1,34 +1,25 @@
-import 'package:cleanarchdemo/data/datasources/local/secure_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cleanarchdemo/data/datasources/local/local_response_data_service.dart';
+import 'package:cleanarchdemo/domain/repositories/local_storage_repository.dart';
+import 'package:hive/hive.dart';
 
-class LocalStorageImpl extends LocalStorage {
-  static LocalStorageImpl? _instance;
-  static SharedPreferences? _preferences;
+class LocalStorageRepositoryImpl extends LocalStorageRepository {
+  final Box<LocalResponseData> box;
+
+  const LocalStorageRepositoryImpl(this.box) : super(box);
 
   @override
-  Future<LocalStorageImpl> getInstance() async {
-     _instance ??= LocalStorageImpl();
-    _preferences ??= await SharedPreferences.getInstance();
-    return _instance!;
+  void addData(LocalResponseData data) async {
+    await box.put("response", data);
   }
 
   @override
-  bool contains(String key) {
-    return _preferences!.getString(key) != null;
-  }
+  Future<LocalResponseData?> getData() async {
+    return box.get("response");
+  } 
 
   @override
-  String? getData(String key) {
-    return _preferences!.getString(key);
+  void removeData() async {
+    await box.delete("response");
   }
 
-  @override
-  void addData(String key, String value) {
-    _preferences!.setString(key, value);
-  }
-
-  @override
-  void deleteData(String key) {
-    _preferences!.remove(key);
-  }
 }

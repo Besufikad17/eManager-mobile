@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 void main() async {
   await initDependency();
-  bool isLoggedIn = locator<LocalStorageImpl>().contains("token");
+  bool isLoggedIn = await locator<LocalStorageRepositoryImpl>().getData() != null;
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 

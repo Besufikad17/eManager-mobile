@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cleanarchdemo/config/router/app_router.dart';
+import 'package:cleanarchdemo/data/datasources/local/local_response_data_service.dart';
+import 'package:cleanarchdemo/data/datasources/local/local_user_data_service.dart';
 import 'package:cleanarchdemo/data/repository/local_storage_repository_impl.dart';
 import 'package:cleanarchdemo/domain/repositories/user_api_repository.dart';
 import 'package:cleanarchdemo/locator.dart';
@@ -41,7 +43,20 @@ class LoginPage extends StatelessWidget {
                 if(state is UserInitial) {
                   return _buildForm(context, context.read<UserBloc>());
                 }else if(state is UserLoaded) {
-                  locator<LocalStorageImpl>().addData("token", state.token);
+                  locator<LocalStorageRepositoryImpl>().addData(
+                    LocalResponseData(
+                      LocalUser(
+                        state.user.id,
+                        state.user.fname,
+                        state.user.lname,
+                        state.user.email,
+                        state.user.phonenumber,
+                        state.user.createdAt,
+                        state.user.updatedAt
+                      ), 
+                      state.token
+                    )
+                  );
                   context.router.push(const HomeRoute());
                 }else if(state is UserError) {
                   _buildError(context, state.message!);
