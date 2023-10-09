@@ -1,31 +1,34 @@
-import 'package:cleanarchdemo/config/storage/local_storage_config.dart';
 import 'package:cleanarchdemo/data/datasources/local/secure_storage.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SecureStorageImpl extends SecureStorage {
-  FlutterSecureStorage? storage;
+class LocalStorageImpl extends LocalStorage {
+  static LocalStorageImpl? _instance;
+  static SharedPreferences? _preferences;
 
-  SecureStorageImpl(SecuredStorageConfig config) : super(config) {
-    storage = FlutterSecureStorage(aOptions: config.getAndroidOptions());
+  @override
+  Future<LocalStorageImpl> getInstance() async {
+     _instance ??= LocalStorageImpl();
+    _preferences ??= await SharedPreferences.getInstance();
+    return _instance!;
   }
 
   @override
-  Future<bool> contains(String key) {
-    return storage!.containsKey(key: key);
+  bool contains(String key) {
+    return _preferences!.getString(key) != null;
   }
 
   @override
-  Future<String?> getData(String key) {
-    return storage!.read(key: key);
+  String? getData(String key) {
+    return _preferences!.getString(key);
   }
 
   @override
   void addData(String key, String value) {
-    storage!.write(key: key, value: value);
+    _preferences!.setString(key, value);
   }
 
   @override
   void deleteData(String key) {
-    storage!.delete(key: key);
+    _preferences!.remove(key);
   }
 }

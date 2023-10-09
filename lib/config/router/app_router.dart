@@ -1,7 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cleanarchdemo/data/repository/local_storage_repository_impl.dart';
-import 'package:cleanarchdemo/domain/models/user.dart';
-import 'package:cleanarchdemo/locator.dart';
 import 'package:cleanarchdemo/presentation/screens/home.dart';
 import 'package:cleanarchdemo/presentation/screens/signup.dart';
 import 'package:cleanarchdemo/presentation/screens/welcome.dart';

@@ -43,8 +43,8 @@ class SignUpPage extends StatelessWidget {
                   if(state is UserInitial) {
                     return _buildForm(context, context.read<UserBloc>());
                   }else if(state is UserLoaded) {
-                    locator<SecureStorageImpl>().storage!.write(key: "token", value: state.token);
-                    context.router.push(HomeRoute());
+                   locator<LocalStorageImpl>().addData("token", state.token);
+                    context.router.push(const HomeRoute());
                   }else if(state is UserError) {
                     _buildError(context, state.message!);
                   }
@@ -98,7 +98,7 @@ class SignUpPage extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(
-            height: 150,
+            height: 100,
           ),
           MyRichText(
               primaryColor: "#F0922E",

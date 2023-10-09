@@ -1,15 +1,12 @@
-import 'package:cleanarchdemo/config/storage/local_storage_config.dart';
+abstract class LocalStorage {
+  Future<LocalStorage> getInstance();
 
-abstract class SecureStorage {
-  SecuredStorageConfig config;
+  bool contains(String key);
 
-  SecureStorage(this.config);
-
-  Future<bool> contains(String key);
-
-  Future<String?> getData(String key);
+  String? getData(String key);
 
   void addData(String key, String value);
 
   void deleteData(String key);
 }
+
