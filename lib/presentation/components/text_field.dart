@@ -6,8 +6,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class MyTextField extends HookWidget {
   const MyTextField({
     super.key, 
-    required this.label, 
-    required this.placeholder,
+    this.label = "", 
+    this.placeholder = "",
     required this.type,
     required this.fontSize,
     required this.height,

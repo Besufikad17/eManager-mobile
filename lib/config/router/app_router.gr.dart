@@ -15,10 +15,20 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    ForgetPasswordRoute.name: (routeData) {
+    ChangePasswordRoute.name: (routeData) {
+      final args = routeData.argsAs<ChangePasswordRouteArgs>(
+          orElse: () => const ChangePasswordRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: ForgetPasswordPage(),
+        child: ChangePasswordPage(key: args.key),
+      );
+    },
+    ForgetPasswordRoute.name: (routeData) {
+      final args = routeData.argsAs<ForgetPasswordRouteArgs>(
+          orElse: () => const ForgetPasswordRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ForgetPasswordPage(key: args.key),
       );
     },
     HomeRoute.name: (routeData) {
@@ -43,6 +53,14 @@ abstract class _$AppRouter extends RootStackRouter {
         child: SignUpPage(key: args.key),
       );
     },
+    VerificationRoute.name: (routeData) {
+      final args = routeData.argsAs<VerificationRouteArgs>(
+          orElse: () => const VerificationRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: VerificationPage(key: args.key),
+      );
+    },
     WelcomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -53,17 +71,61 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
+/// [ChangePasswordPage]
+class ChangePasswordRoute extends PageRouteInfo<ChangePasswordRouteArgs> {
+  ChangePasswordRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ChangePasswordRoute.name,
+          args: ChangePasswordRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'ChangePasswordRoute';
+
+  static const PageInfo<ChangePasswordRouteArgs> page =
+      PageInfo<ChangePasswordRouteArgs>(name);
+}
+
+class ChangePasswordRouteArgs {
+  const ChangePasswordRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ChangePasswordRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
 /// [ForgetPasswordPage]
-class ForgetPasswordRoute extends PageRouteInfo<void> {
-  const ForgetPasswordRoute({List<PageRouteInfo>? children})
-      : super(
+class ForgetPasswordRoute extends PageRouteInfo<ForgetPasswordRouteArgs> {
+  ForgetPasswordRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           ForgetPasswordRoute.name,
+          args: ForgetPasswordRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'ForgetPasswordRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<ForgetPasswordRouteArgs> page =
+      PageInfo<ForgetPasswordRouteArgs>(name);
+}
+
+class ForgetPasswordRouteArgs {
+  const ForgetPasswordRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ForgetPasswordRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -133,6 +195,35 @@ class SignUpRouteArgs {
   @override
   String toString() {
     return 'SignUpRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [VerificationPage]
+class VerificationRoute extends PageRouteInfo<VerificationRouteArgs> {
+  VerificationRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          VerificationRoute.name,
+          args: VerificationRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'VerificationRoute';
+
+  static const PageInfo<VerificationRouteArgs> page =
+      PageInfo<VerificationRouteArgs>(name);
+}
+
+class VerificationRouteArgs {
+  const VerificationRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'VerificationRouteArgs{key: $key}';
   }
 }
 

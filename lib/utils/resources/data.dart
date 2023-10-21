@@ -19,3 +19,7 @@ bool isValidPassword(String password) {
     return false;
   }
 }
+
+bool isValidVerificationCode(String code) {
+  return code.length == 8;
+}

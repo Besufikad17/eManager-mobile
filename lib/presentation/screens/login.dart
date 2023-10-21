@@ -200,7 +200,7 @@ class LoginPage extends StatelessWidget {
                 isUnderline: true,
             ),
           ),
-          const SizedBox(height: 5,),
+          const SizedBox(height: 10,),
           GestureDetector(
             onTap: () {
               context.router.push(ForgetPasswordRoute());

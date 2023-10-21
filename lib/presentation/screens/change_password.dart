@@ -1,17 +1,18 @@
-import 'package:cleanarchdemo/config/router/app_router.dart';
-import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:cleanarchdemo/presentation/components/bazier.dart';
-import 'package:cleanarchdemo/presentation/components/rich_text.dart';
-import 'package:cleanarchdemo/presentation/components/text_field.dart';
-import 'package:cleanarchdemo/presentation/components/text.dart';
 import 'package:cleanarchdemo/presentation/components/button.dart';
+import 'package:cleanarchdemo/presentation/components/rich_text.dart';
+import 'package:cleanarchdemo/presentation/components/text.dart';
+import 'package:cleanarchdemo/presentation/components/text_field.dart';
 import 'package:cleanarchdemo/utils/resources/data.dart';
+import 'package:flutter/material.dart';
 
 @RoutePage()
-class ForgetPasswordPage extends StatelessWidget {
-  ForgetPasswordPage({super.key});
-  final TextEditingController emailTextField = TextEditingController();
+class ChangePasswordPage extends StatelessWidget {
+  ChangePasswordPage({super.key});
+
+  final TextEditingController passwordTextField = TextEditingController();
+  final TextEditingController cpasswordTextField = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class ForgetPasswordPage extends StatelessWidget {
               baseFontSize: 26,
               children: [
                 MyText(
-                  text: "Forgot",
+                  text: "Change",
                   size: 26,
                   color: "#000000",
                 ),
@@ -51,24 +52,41 @@ class ForgetPasswordPage extends StatelessWidget {
               height: 50,
             ),
             MyTextField(
-              label: "Email", 
+              label: "New password", 
               width: 300,
               height: 40,
-              placeholder: "xyz@email.com", 
+              placeholder: "no 1-8", 
               type: "email",
               fontSize: 14,
               focusColor: "#000000",
               borderColor: "#000000",
               enabledBorderWidth: 1,
               focusedBorderWidth: 1.5,
-              regexChecker: isValidEmail,
-              textEditingController: emailTextField,
+              regexChecker: isValidPassword,
+              textEditingController: passwordTextField,
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            MyTextField(
+              label: "Confirm password", 
+              width: 300,
+              height: 40,
+              placeholder: "don't forget the new one!!", 
+              type: "email",
+              fontSize: 14,
+              focusColor: "#000000",
+              borderColor: "#000000",
+              enabledBorderWidth: 1,
+              focusedBorderWidth: 1.5,
+              regexChecker: isValidPassword,
+              textEditingController: passwordTextField,
             ),
             const SizedBox(
               height: 15,
             ),
             MyButton(
-              text: "Recover",
+              text: "Done",
               borderColor: "#F0922E",
               bgcolor: "#F0922E",
               fgcolor: "#ffffff",
@@ -76,7 +94,7 @@ class ForgetPasswordPage extends StatelessWidget {
               width: 300,
               height: 40,
               onPressed: () {
-                context.router.push(VerificationRoute());
+               
               }
             )
            ]
