@@ -165,6 +165,7 @@ class LoginPage extends StatelessWidget {
           ),
           MyButton(
             text: "Login",
+            borderColor: "#F0922E",
             bgcolor: "#F0922E",
             fgcolor: "#ffffff",
             borderWidth: 2,
@@ -196,6 +197,18 @@ class LoginPage extends StatelessWidget {
                 text: "Dont have account?",
                 size: 12,
                 color: "#F0922E",
+                isUnderline: true,
+            ),
+          ),
+          const SizedBox(height: 5,),
+          GestureDetector(
+            onTap: () {
+              context.router.push(ForgetPasswordRoute());
+            },
+            child: MyText(
+                text: "Forgot password?",
+                size: 12,
+                color: "#000000",
                 isUnderline: true,
             ),
           )

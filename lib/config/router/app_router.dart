@@ -3,6 +3,7 @@ import 'package:cleanarchdemo/presentation/screens/home.dart';
 import 'package:cleanarchdemo/presentation/screens/signup.dart';
 import 'package:cleanarchdemo/presentation/screens/welcome.dart';
 import 'package:cleanarchdemo/presentation/screens/login.dart';
+import 'package:cleanarchdemo/presentation/screens/forgot_password.dart';
 import 'package:flutter/material.dart';
 
 part 'app_router.gr.dart';
@@ -17,6 +18,7 @@ class AppRouter extends _$AppRouter {
     AutoRoute(page: WelcomeRoute.page, initial: !isLoggedIn),
     AutoRoute(page: LoginRoute.page),
     AutoRoute(page: SignUpRoute.page),
+    AutoRoute(page: ForgetPasswordRoute.page),
     AutoRoute(page: HomeRoute.page, initial: isLoggedIn)
   ];
 }

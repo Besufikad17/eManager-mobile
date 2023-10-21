@@ -19,12 +19,12 @@ class MyButton extends StatelessWidget {
     required this.text,
     required this.width,
     required this.height,
-    this.bgcolor,
-    this.borderRadius,
-    this.borderWidth,
-    this.borderColor,
-    this.fgcolor,
-    this.fontSize,
+    this.bgcolor = "#000000",
+    this.borderRadius = 0,
+    this.borderWidth = 0,
+    this.borderColor = "#000000",
+    this.fgcolor = "#ffffff",
+    this.fontSize = 12,
     required this.onPressed
   });
 

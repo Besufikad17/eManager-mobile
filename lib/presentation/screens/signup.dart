@@ -195,6 +195,7 @@ class SignUpPage extends StatelessWidget {
           ),
           MyButton(
               text: "Register",
+              borderColor: "#F0922E",
               bgcolor: "#F0922E",
               fgcolor: "#ffffff",
               borderWidth: 2,

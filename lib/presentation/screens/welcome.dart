@@ -55,6 +55,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                   MyButton(
                     text: "Login",
+                    borderColor: "#ffffff",
                     bgcolor: "#ffffff",
                     fgcolor: "#F0922E",
                     width: 300,
