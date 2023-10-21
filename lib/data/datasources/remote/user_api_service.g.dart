@@ -13,7 +13,7 @@ class _UserApiService implements UserApiService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://localhost:8000/api';
+    baseUrl ??= 'http://localhost:8000/api/v1/';
   }
 
   final Dio _dio;

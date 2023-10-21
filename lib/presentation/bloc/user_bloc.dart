@@ -29,7 +29,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       if(response is DataSuccess) {
         emit(UserLoaded(response.data!.user!, response.data!.token!));
       }else if(response is DataFailed) {
-        emit(UserError(response.error!.message));
+        emit(UserError(response.message));
       }
     });
 
@@ -47,7 +47,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       if(response is DataSuccess) {
         emit(UserLoaded(response.data!.user, response.data!.token));
       }else if(response is DataFailed) {
-        emit(UserError(response.error!.message));
+        emit(UserError(response.message));
       }
     });
 

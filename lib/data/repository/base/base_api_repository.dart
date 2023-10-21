@@ -7,8 +7,7 @@ import 'package:cleanarchdemo/utils/resources/data_state.dart';
 abstract class BaseApiRepository {
   @protected
   Future<DataState<T>> getStateOf<T>({
-    required Future<HttpResponse<T>> Function() request,
-    required String errorMessage
+    required Future<HttpResponse<T>> Function() request
   }) async {
     try {
       final httpResponse = await request();
@@ -17,12 +16,12 @@ abstract class BaseApiRepository {
       } else {
         throw DioException(
           response: httpResponse.response,
-          requestOptions: httpResponse.response.requestOptions,
-          message: errorMessage
+          requestOptions: httpResponse.response.requestOptions
         );
       }  
     } on DioException catch (error) {
-      return DataFailed(error);
+      final res = error.response;
+      return DataFailed(error, res!.data['message']);
     }
   } 
 }

@@ -52,7 +52,7 @@ class SignUpPage extends StatelessWidget {
                           state.user.fname,
                           state.user.lname,
                           state.user.email,
-                          state.user.phonenumber,
+                          state.user.phoneNumber,
                           state.user.createdAt,
                           state.user.updatedAt
                         ), 

@@ -9,7 +9,7 @@ class User extends Equatable {
   final String? fname;
   final String? lname;
   final String? email;
-  final String? phonenumber;
+  final String? phoneNumber;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -18,7 +18,7 @@ class User extends Equatable {
     this.fname,
     this.lname,
     this.email,
-    this.phonenumber,
+    this.phoneNumber,
     this.createdAt,
     this.updatedAt
   });
@@ -29,7 +29,7 @@ class User extends Equatable {
       fname: json['fname'],
       lname: json['lname'],
       email: json['email'],
-      phonenumber: json['phonenumber'],
+      phoneNumber: json['phonenumber'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt']
     );
@@ -49,7 +49,7 @@ class User extends Equatable {
     fname, 
     lname,
     email,
-    phonenumber,
+    phoneNumber,
     createdAt,
     updatedAt
   ];

@@ -19,8 +19,7 @@ class UserApiRepositoryImpl extends BaseApiRepository implements UserApiReposito
     return getStateOf<UserSignUpResponse>(
       request: () => _apiService.signup(
         request: request
-      ),
-      errorMessage: ""
+      )
     );
   }
 
@@ -31,8 +30,7 @@ class UserApiRepositoryImpl extends BaseApiRepository implements UserApiReposito
     return getStateOf(
         request: () => _apiService.login(
             request: request
-        ),
-        errorMessage: "Invalid credentials!!"
+        )
     );
   }
 }

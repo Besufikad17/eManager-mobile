@@ -7,14 +7,14 @@ class UserSignUpRequest {
   final String fname;
   final String lname;
   final String email;
-  final String phonenumber;
+  final String phoneNumber;
   final String password;
 
   const UserSignUpRequest(
     this.fname,
     this.lname,
     this.email,
-    this.phonenumber,
+    this.phoneNumber,
     this.password
   );
 
@@ -33,7 +33,7 @@ class UserSignUpRequest {
       'fname': fname,
       'lname': lname,
       'email': email,
-      'phonenumber': phonenumber,
+      'phoneNumber': phoneNumber,
       'password': password
     };
   }
