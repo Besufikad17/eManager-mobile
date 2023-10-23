@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cleanarchdemo/data/repository/local_storage_repository_impl.dart';
+import 'package:cleanarchdemo/domain/models/requests/change_password_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/forgot_password_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/user_login_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/user_signup_request.dart';
@@ -78,6 +79,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
       if(response is DataSuccess) {
         emit(Verified(response.data!.status));
+      }else if(response is DataFailed) {
+        emit(UserError(response.message));
+      }
+    });
+
+    on<ChangePasswordEvent>((event, emit) async {
+      emit(const UserLoading());
+      final response = await _repository.changePassword(
+        request: ChangePasswordRequest(event.id, event.email, event.newPassword)
+      );
+
+      if(response is DataSuccess) {
+        emit(PasswordChanged(response.data!.status));
       }else if(response is DataFailed) {
         emit(UserError(response.message));
       }

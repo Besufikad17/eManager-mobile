@@ -50,7 +50,7 @@ class VerificationPage extends StatelessWidget {
                     ),
                   );
                 } else if(state is Verified) {
-                  context.router.push(ChangePasswordRoute());
+                  context.router.push(ChangePasswordRoute(email: email));
                 } else if(state is UserError) {
                   _buildError(context, state.message!);
                 }

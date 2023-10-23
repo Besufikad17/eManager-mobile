@@ -52,6 +52,14 @@ final class Verified extends UserState {
   List<Object?> get props => [status];
 }
 
+final class PasswordChanged extends UserState {
+  final String status;
+  const PasswordChanged(this.status);
+
+  @override
+  List<Object?> get props => [status];
+}
+
 final class UserError extends UserState {
   final String? message;
 

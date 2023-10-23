@@ -16,11 +16,13 @@ abstract class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     ChangePasswordRoute.name: (routeData) {
-      final args = routeData.argsAs<ChangePasswordRouteArgs>(
-          orElse: () => const ChangePasswordRouteArgs());
+      final args = routeData.argsAs<ChangePasswordRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: ChangePasswordPage(key: args.key),
+        child: ChangePasswordPage(
+          key: args.key,
+          email: args.email,
+        ),
       );
     },
     ForgotPasswordRoute.name: (routeData) {
@@ -77,10 +79,14 @@ abstract class _$AppRouter extends RootStackRouter {
 class ChangePasswordRoute extends PageRouteInfo<ChangePasswordRouteArgs> {
   ChangePasswordRoute({
     Key? key,
+    required String email,
     List<PageRouteInfo>? children,
   }) : super(
           ChangePasswordRoute.name,
-          args: ChangePasswordRouteArgs(key: key),
+          args: ChangePasswordRouteArgs(
+            key: key,
+            email: email,
+          ),
           initialChildren: children,
         );
 
@@ -91,13 +97,18 @@ class ChangePasswordRoute extends PageRouteInfo<ChangePasswordRouteArgs> {
 }
 
 class ChangePasswordRouteArgs {
-  const ChangePasswordRouteArgs({this.key});
+  const ChangePasswordRouteArgs({
+    this.key,
+    required this.email,
+  });
 
   final Key? key;
 
+  final String email;
+
   @override
   String toString() {
-    return 'ChangePasswordRouteArgs{key: $key}';
+    return 'ChangePasswordRouteArgs{key: $key, email: $email}';
   }
 }
 
