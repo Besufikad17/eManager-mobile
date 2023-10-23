@@ -45,7 +45,7 @@ class ForgotPasswordPage extends StatelessWidget {
                     ),
                   );
                 } else if(state is ForgotPassword) {
-                  context.router.push(VerificationRoute());
+                  context.router.push(VerificationRoute(email: emailTextField.text));
                 } else if(state is UserError) {
                   _buildError(context, state.message!);
                 }
@@ -58,7 +58,7 @@ class ForgotPasswordPage extends StatelessWidget {
     ); 
   }
 
-   void _buildError(BuildContext context, String message) async {
+  void _buildError(BuildContext context, String message) async {
     await Future.delayed(const Duration(microseconds: 1));
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(

@@ -54,11 +54,13 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     VerificationRoute.name: (routeData) {
-      final args = routeData.argsAs<VerificationRouteArgs>(
-          orElse: () => const VerificationRouteArgs());
+      final args = routeData.argsAs<VerificationRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: VerificationPage(key: args.key),
+        child: VerificationPage(
+          key: args.key,
+          email: args.email,
+        ),
       );
     },
     WelcomeRoute.name: (routeData) {
@@ -203,10 +205,14 @@ class SignUpRouteArgs {
 class VerificationRoute extends PageRouteInfo<VerificationRouteArgs> {
   VerificationRoute({
     Key? key,
+    required String email,
     List<PageRouteInfo>? children,
   }) : super(
           VerificationRoute.name,
-          args: VerificationRouteArgs(key: key),
+          args: VerificationRouteArgs(
+            key: key,
+            email: email,
+          ),
           initialChildren: children,
         );
 
@@ -217,13 +223,18 @@ class VerificationRoute extends PageRouteInfo<VerificationRouteArgs> {
 }
 
 class VerificationRouteArgs {
-  const VerificationRouteArgs({this.key});
+  const VerificationRouteArgs({
+    this.key,
+    required this.email,
+  });
 
   final Key? key;
 
+  final String email;
+
   @override
   String toString() {
-    return 'VerificationRouteArgs{key: $key}';
+    return 'VerificationRouteArgs{key: $key, email: $email}';
   }
 }
 

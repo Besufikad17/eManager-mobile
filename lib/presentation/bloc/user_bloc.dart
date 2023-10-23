@@ -1,9 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:cleanarchdemo/data/repository/local_storage_repository_impl.dart';
 import 'package:cleanarchdemo/domain/models/requests/forgot_password_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/user_login_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/user_signup_request.dart';
+import 'package:cleanarchdemo/domain/models/requests/verification_request.dart';
 import 'package:cleanarchdemo/domain/models/user.dart';
 import 'package:cleanarchdemo/domain/repositories/user_api_repository.dart';
+import 'package:cleanarchdemo/locator.dart';
 import 'package:cleanarchdemo/utils/resources/data_state.dart';
 import 'package:equatable/equatable.dart';
 
@@ -67,8 +70,22 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
     });
 
+    on<VerificationEvent>((event, emit) async {
+      emit(const UserLoading());
+      final response = await _repository.verify(
+        request: VerificationRequest(event.code, event.email)
+      );
+
+      if(response is DataSuccess) {
+        emit(Verified(response.data!.status));
+      }else if(response is DataFailed) {
+        emit(UserError(response.message));
+      }
+    });
+
     on<UserLogoutEvent>((event, emit) {
       emit(const UserLoading());
+      locator.get<LocalStorageRepositoryImpl>().removeData();
       emit(const UserLoggedOut());
     });
   }

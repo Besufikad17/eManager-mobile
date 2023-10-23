@@ -37,7 +37,6 @@ class HomePage extends StatelessWidget {
                 ),
               );
             }else if(state is UserLoggedOut) {
-              locator.get<LocalStorageRepositoryImpl>().removeData();
               context.router.push(const WelcomeRoute());
             }else if(state is UserError) {
               _buildError(context, state.message!);
