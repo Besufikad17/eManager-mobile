@@ -11,6 +11,20 @@ final class UserInitial extends UserState {
   List<Object> get props => [];
 }
 
+final class UserLoading extends UserState {
+  const UserLoading();
+
+  @override
+  List<Object?> get props => [];
+}
+
+final class UserLoggedOut extends UserState {
+  const UserLoggedOut();
+
+  @override
+  List<Object?> get props => [];
+}
+
 final class UserLoaded extends UserState {
   final User user;
   final String token;
@@ -21,6 +35,15 @@ final class UserLoaded extends UserState {
   List<Object> get props => [user];
 }
 
+
+final class ForgotPassword extends UserState {
+  final String code;
+  const ForgotPassword(this.code);
+
+  @override
+  List<Object?> get props => [code];
+}
+
 final class UserError extends UserState {
   final String? message;
 
@@ -29,3 +52,4 @@ final class UserError extends UserState {
   @override
   List<Object> get props => [message!];
 }
+

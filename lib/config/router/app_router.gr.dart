@@ -23,12 +23,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: ChangePasswordPage(key: args.key),
       );
     },
-    ForgetPasswordRoute.name: (routeData) {
-      final args = routeData.argsAs<ForgetPasswordRouteArgs>(
-          orElse: () => const ForgetPasswordRouteArgs());
+    ForgotPasswordRoute.name: (routeData) {
+      final args = routeData.argsAs<ForgotPasswordRouteArgs>(
+          orElse: () => const ForgotPasswordRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: ForgetPasswordPage(key: args.key),
+        child: ForgotPasswordPage(key: args.key),
       );
     },
     HomeRoute.name: (routeData) {
@@ -100,31 +100,31 @@ class ChangePasswordRouteArgs {
 }
 
 /// generated route for
-/// [ForgetPasswordPage]
-class ForgetPasswordRoute extends PageRouteInfo<ForgetPasswordRouteArgs> {
-  ForgetPasswordRoute({
+/// [ForgotPasswordPage]
+class ForgotPasswordRoute extends PageRouteInfo<ForgotPasswordRouteArgs> {
+  ForgotPasswordRoute({
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
-          ForgetPasswordRoute.name,
-          args: ForgetPasswordRouteArgs(key: key),
+          ForgotPasswordRoute.name,
+          args: ForgotPasswordRouteArgs(key: key),
           initialChildren: children,
         );
 
-  static const String name = 'ForgetPasswordRoute';
+  static const String name = 'ForgotPasswordRoute';
 
-  static const PageInfo<ForgetPasswordRouteArgs> page =
-      PageInfo<ForgetPasswordRouteArgs>(name);
+  static const PageInfo<ForgotPasswordRouteArgs> page =
+      PageInfo<ForgotPasswordRouteArgs>(name);
 }
 
-class ForgetPasswordRouteArgs {
-  const ForgetPasswordRouteArgs({this.key});
+class ForgotPasswordRouteArgs {
+  const ForgotPasswordRouteArgs({this.key});
 
   final Key? key;
 
   @override
   String toString() {
-    return 'ForgetPasswordRouteArgs{key: $key}';
+    return 'ForgotPasswordRouteArgs{key: $key}';
   }
 }
 

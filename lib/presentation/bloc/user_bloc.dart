@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:cleanarchdemo/domain/models/requests/forgot_password_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/user_login_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/user_signup_request.dart';
 import 'package:cleanarchdemo/domain/models/user.dart';
@@ -13,15 +14,16 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final UserApiRepository _repository;
   
   UserBloc(this._repository) : super(const UserInitial()) {
-    on<UserLoginLoading>((event, emit) async {
+    on<UserLoginLoading>((event, emit){
       emit(const UserInitial());
     });
 
-    on<UserRegisterLoading>((event, emit) async {
+    on<UserRegisterLoading>((event, emit){
       emit(const UserInitial());
     });
-
+    
     on<UserLoginEvent>((event, emit) async {
+      emit(const UserLoading());
       final response = await _repository.login(
         request: UserLoginRequest(event.email, event.password)
       );
@@ -34,6 +36,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     });
 
     on<UserRegisterEvent>((event, emit) async {
+      emit(const UserLoading());
       final response = await _repository.signup(
           request: UserSignUpRequest(
               event.fname,
@@ -51,8 +54,22 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
     });
 
+    on<ForgotPasswordEvent>((event, emit) async {
+      emit(const UserLoading());
+      final response = await _repository.forgotPassword(
+        request: ForgotPasswordRequest(event.email)
+      );
+
+      if(response is DataSuccess) {
+        emit(ForgotPassword(response.data!.code));
+      }else if(response is DataFailed) {
+        emit(UserError(response.message));
+      }
+    });
+
     on<UserLogoutEvent>((event, emit) {
-      
+      emit(const UserLoading());
+      emit(const UserLoggedOut());
     });
   }
 }

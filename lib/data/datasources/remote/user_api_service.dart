@@ -1,3 +1,5 @@
+import 'package:cleanarchdemo/domain/models/requests/forgot_password_request.dart';
+import 'package:cleanarchdemo/domain/models/responses/forgot_password_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:cleanarchdemo/utils/constants/strings.dart';
@@ -20,5 +22,10 @@ abstract class UserApiService {
   @POST('/login')
   Future<HttpResponse<UserLoginResponse>> login({
     @Body() required UserLoginRequest request 
+  });
+
+  @POST('/request_recover')
+  Future<HttpResponse<ForgotPasswordResponse>> forgotPassword({
+    @Body() required ForgotPasswordRequest request
   });
 }

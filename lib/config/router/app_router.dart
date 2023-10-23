@@ -20,7 +20,7 @@ class AppRouter extends _$AppRouter {
     AutoRoute(page: WelcomeRoute.page, initial: !isLoggedIn),
     AutoRoute(page: LoginRoute.page),
     AutoRoute(page: SignUpRoute.page),
-    AutoRoute(page: ForgetPasswordRoute.page),
+    AutoRoute(page: ForgotPasswordRoute.page),
     AutoRoute(page: VerificationRoute.page),
     AutoRoute(page: ChangePasswordRoute.page),
     AutoRoute(page: HomeRoute.page, initial: isLoggedIn)

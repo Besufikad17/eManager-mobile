@@ -12,6 +12,7 @@ import 'package:cleanarchdemo/presentation/components/button.dart';
 import 'package:cleanarchdemo/presentation/components/rich_text.dart';
 import 'package:cleanarchdemo/presentation/components/text.dart';
 import 'package:cleanarchdemo/presentation/components/text_field.dart';
+import 'package:cleanarchdemo/utils/resources/colors.dart';
 import 'package:cleanarchdemo/utils/resources/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,6 +43,12 @@ class LoginPage extends StatelessWidget {
               builder: (BuildContext context, UserState state) {
                 if(state is UserInitial) {
                   return _buildForm(context, context.read<UserBloc>());
+                }else if(state is UserLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: getColorFromHex("#F0922E"),
+                    ),
+                  );
                 }else if(state is UserLoaded) {
                   locator<LocalStorageRepositoryImpl>().addData(
                     LocalResponseData(
@@ -203,7 +210,7 @@ class LoginPage extends StatelessWidget {
           const SizedBox(height: 10,),
           GestureDetector(
             onTap: () {
-              context.router.push(ForgetPasswordRoute());
+              context.router.push(ForgotPasswordRoute());
             },
             child: MyText(
                 text: "Forgot password?",

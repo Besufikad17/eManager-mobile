@@ -1,3 +1,5 @@
+import 'package:cleanarchdemo/domain/models/requests/forgot_password_request.dart';
+import 'package:cleanarchdemo/domain/models/responses/forgot_password_response.dart';
 import 'package:cleanarchdemo/domain/repositories/user_api_repository.dart';
 import 'package:cleanarchdemo/data/repository/base/base_api_repository.dart';
 import 'package:cleanarchdemo/data/datasources/remote/user_api_service.dart';
@@ -31,6 +33,17 @@ class UserApiRepositoryImpl extends BaseApiRepository implements UserApiReposito
         request: () => _apiService.login(
             request: request
         )
+    );
+  }
+
+  @override
+  Future<DataState<ForgotPasswordResponse>> forgotPassword({
+    required ForgotPasswordRequest request
+  }) {
+    return getStateOf(
+      request: () => _apiService.forgotPassword(
+        request: request
+      )
     );
   }
 }

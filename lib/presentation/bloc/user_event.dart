@@ -53,6 +53,14 @@ class UserRegisterEvent extends UserEvent {
   ];
 }
 
+class ForgotPasswordEvent extends UserEvent {
+  final String email;
+  const ForgotPasswordEvent(this.email);
+
+  @override
+  List<Object?> get props => [email];
+}
+
 class UserLogoutEvent extends UserEvent {
   const UserLogoutEvent();
 
