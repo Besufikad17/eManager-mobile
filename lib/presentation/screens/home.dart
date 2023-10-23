@@ -6,6 +6,7 @@ import 'package:cleanarchdemo/domain/repositories/user_api_repository.dart';
 import 'package:cleanarchdemo/locator.dart';
 import 'package:cleanarchdemo/presentation/bloc/user_bloc.dart';
 import 'package:cleanarchdemo/presentation/components/button.dart';
+import 'package:cleanarchdemo/presentation/components/image_gallary.dart';
 import 'package:cleanarchdemo/utils/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -113,21 +114,14 @@ class HomePage extends StatelessWidget {
                     showDialog(
                       context: context, 
                       builder: (BuildContext context) {
-                        return Container(
-                          padding: const EdgeInsets.all(10),
-                          child: Image.network(
-                            images[0],
-                            width: 50,
-                            height: 50,
-                          )
-                        );
+                        return ImageGallery(images: images,);
                       }
                     );
                   },
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(75)),
                     child: Image.network(
-                      images[0],
+                      images[2],
                       width: 150,
                       height: 150,
                     ),
