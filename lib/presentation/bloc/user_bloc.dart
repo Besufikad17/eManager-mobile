@@ -102,5 +102,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       locator.get<LocalStorageRepositoryImpl>().removeData();
       emit(const UserLoggedOut());
     });
+
+    on<GetPFP>((event, emit) async {
+      final response = await _repository.getPFPs(
+        id: event.id,
+        token: event.token
+      );
+
+      if(response is DataSuccess) {
+        emit(UserPFP(response.data!.images));
+      }else if(response is DataFailed) {
+        emit(UserError(response.message));
+      }
+    });
   }
 }

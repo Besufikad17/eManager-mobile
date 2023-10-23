@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cleanarchdemo/config/router/app_router.dart';
+import 'package:cleanarchdemo/data/datasources/local/local_user_data_service.dart';
 import 'package:cleanarchdemo/data/repository/local_storage_repository_impl.dart';
 import 'package:cleanarchdemo/domain/repositories/user_api_repository.dart';
 import 'package:cleanarchdemo/locator.dart';
@@ -20,30 +21,46 @@ class HomePage extends StatelessWidget {
     return (await locator<LocalStorageRepositoryImpl>().getData())!.token;
   }
 
+  Future<LocalUser> getUser() async {
+    return (await locator<LocalStorageRepositoryImpl>().getData())!.user;
+  } 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => UserBloc(locator<UserApiRepository>()),
-        child: BlocConsumer<UserBloc, UserState>(
-          listener: (context, state) => {},
-          builder: (BuildContext context, UserState state) {
-            if(state is UserInitial) {
-              return _buildInitial(context, context.read<UserBloc>()); 
-            }else if(state is UserLoading) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: getColorFromHex("#F0922E"),
-                ),
-              );
-            }else if(state is UserLoggedOut) {
-              context.router.push(const WelcomeRoute());
-            }else if(state is UserError) {
-              _buildError(context, state.message!);
-            }
-            return Container();
-          },
-        ),
+      body: FutureBuilder(
+        future: Future.wait([getUser(), getToken()]),
+        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+          return BlocProvider(
+            create: (context) => UserBloc(locator<UserApiRepository>()),
+            child: BlocConsumer<UserBloc, UserState>(
+              listener: (context, state) => {},
+              builder: (BuildContext context, UserState state) {
+                if(state is UserInitial) {
+                  context.read<UserBloc>().add(
+                    GetPFP(
+                      snapshot.data![0].id.toString(), 
+                      snapshot.data![1]
+                    )
+                  );
+                }else if(state is UserLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: getColorFromHex("#F0922E"),
+                    ),
+                  );
+                }else if(state is UserPFP) {
+                  return _buildInitialWithPFP(context, context.read<UserBloc>(), state.images);
+                }else if(state is UserLoggedOut) {
+                  context.router.push(const WelcomeRoute());
+                }else if(state is UserError) {
+                  _buildError(context, state.message!);
+                }
+                return Container();
+              },
+            ),
+          );
+        }
       ),
     );
   }
@@ -84,17 +101,44 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildInitial(BuildContext context, UserBloc bloc) {
+  Widget _buildInitialWithPFP(BuildContext context, UserBloc bloc, List<dynamic> images) {
     return SliderDrawer(
         slider: Container(
           child: Center(
             child: Column(
               children: [
-                //Image.network("")
+                const SizedBox(height: 50,),
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context, 
+                      builder: (BuildContext context) {
+                        return Container(
+                          padding: const EdgeInsets.all(10),
+                          child: Image.network(
+                            images[0],
+                            width: 50,
+                            height: 50,
+                          )
+                        );
+                      }
+                    );
+                  },
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(75)),
+                    child: Image.network(
+                      images[0],
+                      width: 150,
+                      height: 150,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20,),
                 MyButton(
                   text: "Logout", 
-                  width: 200, 
-                  height: 40,
+                  width: 150, 
+                  height: 30,
+                  borderRadius: 5,
                   onPressed: () {
                     bloc.add(const UserLogoutEvent());
                   }

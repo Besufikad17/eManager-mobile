@@ -92,3 +92,13 @@ class UserLogoutEvent extends UserEvent {
   @override
   List<Object?> get props => [];
 }
+
+class GetPFP extends UserEvent {
+  final String id;
+  final String token;
+
+  const GetPFP(this.id, this.token);
+
+  @override
+  List<Object?> get props => [id];
+}

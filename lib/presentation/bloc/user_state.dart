@@ -60,6 +60,14 @@ final class PasswordChanged extends UserState {
   List<Object?> get props => [status];
 }
 
+final class UserPFP extends UserState {
+  final List<dynamic> images;
+  const UserPFP(this.images);
+
+  @override
+  List<Object?> get props => [images];
+}
+
 final class UserError extends UserState {
   final String? message;
 

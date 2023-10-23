@@ -3,6 +3,7 @@ import 'package:cleanarchdemo/domain/models/requests/forgot_password_request.dar
 import 'package:cleanarchdemo/domain/models/requests/verification_request.dart';
 import 'package:cleanarchdemo/domain/models/responses/change_password_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/forgot_password_response.dart';
+import 'package:cleanarchdemo/domain/models/responses/get_pfp_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/verification_response.dart';
 import 'package:cleanarchdemo/domain/repositories/user_api_repository.dart';
 import 'package:cleanarchdemo/data/repository/base/base_api_repository.dart';
@@ -69,6 +70,19 @@ class UserApiRepositoryImpl extends BaseApiRepository implements UserApiReposito
     return getStateOf(
       request: () => _apiService.chanePassword(
         request: request
+      )
+    );
+  }
+
+  @override
+  Future<DataState<GetPFPResponse>> getPFPs({
+    required String id,
+    required String token
+  }) {
+    return getStateOf(
+      request: () => _apiService.getPFPs(
+        id: id,
+        token: "Bearer $token"
       )
     );
   }

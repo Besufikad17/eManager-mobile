@@ -5,6 +5,7 @@ import 'package:cleanarchdemo/domain/models/requests/forgot_password_request.dar
 import 'package:cleanarchdemo/domain/models/requests/verification_request.dart';
 import 'package:cleanarchdemo/domain/models/responses/change_password_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/forgot_password_response.dart';
+import 'package:cleanarchdemo/domain/models/responses/get_pfp_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/verification_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
@@ -43,5 +44,11 @@ abstract class UserApiService {
   @PUT('/change_password')
   Future<HttpResponse<ChangePasswordResponse>> chanePassword({
     @Body() required ChangePasswordRequest request
+  });
+
+  @GET('/images/{id}')
+  Future<HttpResponse<GetPFPResponse>> getPFPs({
+    @Path() required String id,
+    @Header('Authorization') required String token,
   });
 }
