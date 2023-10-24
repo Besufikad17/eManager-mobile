@@ -7,6 +7,7 @@ class MyText extends StatelessWidget {
   final double size;
   bool isBold;
   bool isUnderline;
+  bool isLight;
   double width;
   String color;
   TextOverflow overflow;
@@ -17,10 +18,21 @@ class MyText extends StatelessWidget {
     required this.size,
     this.isBold = false,
     this.isUnderline = false,
+    this.isLight = false,
     this.width = 0,
     this.color = "#000000",
     this.overflow = TextOverflow.ellipsis
   });
+
+  FontWeight getFontWeight() {
+    if(isBold) {
+      return FontWeight.w600;
+    }else if(isLight) {
+      return FontWeight.w300;
+    }else {
+      return FontWeight.normal;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +41,7 @@ class MyText extends StatelessWidget {
       style: TextStyle(
         fontSize: size,
         decoration: isUnderline ? TextDecoration.underline : TextDecoration.none,
-        fontWeight: isBold ? FontWeight.w600 : FontWeight.normal,
+        fontWeight: getFontWeight(),
         color: getColorFromHex(color),
       ),
       textAlign: TextAlign.center
