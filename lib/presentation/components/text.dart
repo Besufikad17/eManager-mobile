@@ -9,6 +9,7 @@ class MyText extends StatelessWidget {
   bool isUnderline;
   double width;
   String color;
+  TextOverflow overflow;
 
   MyText({
     super.key,
@@ -17,13 +18,14 @@ class MyText extends StatelessWidget {
     this.isBold = false,
     this.isUnderline = false,
     this.width = 0,
-    this.color = "#000000"
+    this.color = "#000000",
+    this.overflow = TextOverflow.ellipsis
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(text,
-      overflow: TextOverflow.ellipsis,
+      overflow: overflow,
       style: TextStyle(
         fontSize: size,
         decoration: isUnderline ? TextDecoration.underline : TextDecoration.none,

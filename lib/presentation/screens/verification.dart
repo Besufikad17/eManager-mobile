@@ -109,6 +109,7 @@ class VerificationPage extends StatelessWidget {
           MyRichText(
             primaryColor: "#F0922E",
             baseFontSize: 26,
+            recognizer: () {},
             children: [
               MyText(
                 text: "Veri",
@@ -168,6 +169,7 @@ class VerificationPage extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: MyRichText(
               primaryColor: "#000000",
+              recognizer: () {},
               baseFontSize: 14,
               children: [
                 MyText(

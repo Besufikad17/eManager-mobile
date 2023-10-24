@@ -104,6 +104,7 @@ class ForgotPasswordPage extends StatelessWidget {
           MyRichText(
             primaryColor: "#F0922E",
             baseFontSize: 26,
+            recognizer: () {},
             children: [
               MyText(
                 text: "Forgot",
