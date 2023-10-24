@@ -5,16 +5,11 @@ import 'package:cleanarchdemo/data/repository/local_storage_repository_impl.dart
 import 'package:cleanarchdemo/domain/repositories/user_api_repository.dart';
 import 'package:cleanarchdemo/locator.dart';
 import 'package:cleanarchdemo/presentation/bloc/user_bloc.dart';
-import 'package:cleanarchdemo/presentation/components/alert.dart';
-import 'package:cleanarchdemo/presentation/components/image_gallary.dart';
-import 'package:cleanarchdemo/presentation/components/rich_text.dart';
-import 'package:cleanarchdemo/presentation/components/text.dart';
+import 'package:cleanarchdemo/presentation/components/side_bar.dart';
 import 'package:cleanarchdemo/utils/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -108,104 +103,9 @@ class HomePage extends StatelessWidget {
 
   Widget _buildInitialWithPFP(BuildContext context, UserBloc bloc, List<dynamic> images, LocalUser user) {
     return SliderDrawer(
-        slider: Container(
-          padding: const EdgeInsets.all(20),
-          child: Center(
-            child: Column(
-              children: [
-                const SizedBox(height: 50,),
-                GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context, 
-                      builder: (BuildContext context) {
-                        return ImageGallery(images: images,);
-                      }
-                    );
-                  },
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(75)),
-                    child: Image.network(
-                      images[0],
-                      width: 150,
-                      height: 150,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                MyText(text: "${user.fname} ${user.lname}", size: 16, isBold: true,),
-                const SizedBox(height: 40,),
-                GestureDetector(
-                  child: Row(
-                    children: [
-                      const Icon(Icons.settings),
-                      const SizedBox(width: 10,),
-                      MyText(text: "Settings", size: 16)
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                GestureDetector(
-                  onTap: () {
-                    showDialog(
-                      context: context, 
-                      builder: (BuildContext context) {
-                        return MyAlert(
-                          title: "About", 
-                          type: AlertType.message, 
-                          body: Expanded(
-                            child: MyText(
-                              text: "cleanarchdemo is built for the purpose of learning clean code architecture and " + 
-                              "other best practices used in flutter. Don't forget to 🌟 the repo 😜.", 
-                              size: 12,
-                              overflow: TextOverflow.visible
-                            ),
-                            // MyRichText(
-                            //   primaryColor: "#000000", 
-                            //   baseFontSize: 12, 
-                            //    recognizer : () async{
-                            //     var url = Uri(scheme: 'https', host: 'github.com/Besufikad17/eManager-mobile');
-                            //     if (await canLaunchUrl(url)) {
-                            //       await launchUrl(url);
-                            //     } else {
-                            //       throw 'Could not launch $url';
-                            //     }
-                            //   },
-                            //   children: [
-                            //     MyText(text: "Github", size: 12)
-                            //   ]),
-                          )
-                        );
-                      }
-                    );
-                  },
-                  child: Row(
-                    children: [
-                      const Icon(Icons.info),
-                      const SizedBox(width: 10,),
-                      MyText(text: "About", size: 16)
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20,),
-                GestureDetector(
-                  onTap: () {
-                     bloc.add(const UserLogoutEvent());
-                  },
-                  child: Row(
-                    children: [
-                      const Icon(Icons.logout),
-                      const SizedBox(width: 10,),
-                      MyText(text: "Logout", size: 16)
-                    ],
-                  ),
-                ),
-              ],
-            ) 
-          ),
-        ),
+        slider: MySideBar(images: images, user: user, bloc: bloc),
         appBar: const SliderAppBar(
-          title: Text("Home"),
+          title: Text("Home", style: TextStyle(fontWeight: FontWeight.bold),),
           isTitleCenter: true,
         ),
         child: Center(

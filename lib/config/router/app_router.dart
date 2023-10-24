@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cleanarchdemo/data/datasources/local/local_user_data_service.dart';
+import 'package:cleanarchdemo/presentation/bloc/user_bloc.dart';
 import 'package:cleanarchdemo/presentation/screens/change_password.dart';
 import 'package:cleanarchdemo/presentation/screens/home.dart';
+import 'package:cleanarchdemo/presentation/screens/settings.dart';
 import 'package:cleanarchdemo/presentation/screens/signup.dart';
 import 'package:cleanarchdemo/presentation/screens/verification.dart';
 import 'package:cleanarchdemo/presentation/screens/welcome.dart';
@@ -23,6 +26,7 @@ class AppRouter extends _$AppRouter {
     AutoRoute(page: ForgotPasswordRoute.page),
     AutoRoute(page: VerificationRoute.page),
     AutoRoute(page: ChangePasswordRoute.page),
+    AutoRoute(page: SettingsRoute.page),
     AutoRoute(page: HomeRoute.page, initial: isLoggedIn)
   ];
 }

@@ -8,7 +8,7 @@ part of 'get_pfp_response.dart';
 
 GetPFPResponse _$GetPFPResponseFromJson(Map<String, dynamic> json) =>
     GetPFPResponse(
-      (json['images'] as List<dynamic>).map((e) => e as String).toList(),
+      json['images'] as List<dynamic>,
     );
 
 Map<String, dynamic> _$GetPFPResponseToJson(GetPFPResponse instance) =>

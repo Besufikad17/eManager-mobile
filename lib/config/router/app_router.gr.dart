@@ -47,6 +47,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: LoginPage(key: args.key),
       );
     },
+    SettingsRoute.name: (routeData) {
+      final args = routeData.argsAs<SettingsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SettingsPage(
+          key: args.key,
+          bloc: args.bloc,
+          images: args.images,
+          user: args.user,
+        ),
+      );
+    },
     SignUpRoute.name: (routeData) {
       final args = routeData.argsAs<SignUpRouteArgs>(
           orElse: () => const SignUpRouteArgs());
@@ -180,6 +192,54 @@ class LoginRouteArgs {
   @override
   String toString() {
     return 'LoginRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [SettingsPage]
+class SettingsRoute extends PageRouteInfo<SettingsRouteArgs> {
+  SettingsRoute({
+    Key? key,
+    required UserBloc bloc,
+    required List<dynamic> images,
+    required LocalUser user,
+    List<PageRouteInfo>? children,
+  }) : super(
+          SettingsRoute.name,
+          args: SettingsRouteArgs(
+            key: key,
+            bloc: bloc,
+            images: images,
+            user: user,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SettingsRoute';
+
+  static const PageInfo<SettingsRouteArgs> page =
+      PageInfo<SettingsRouteArgs>(name);
+}
+
+class SettingsRouteArgs {
+  const SettingsRouteArgs({
+    this.key,
+    required this.bloc,
+    required this.images,
+    required this.user,
+  });
+
+  final Key? key;
+
+  final UserBloc bloc;
+
+  final List<dynamic> images;
+
+  final LocalUser user;
+
+  @override
+  String toString() {
+    return 'SettingsRouteArgs{key: $key, bloc: $bloc, images: $images, user: $user}';
   }
 }
 
