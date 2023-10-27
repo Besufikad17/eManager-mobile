@@ -17,44 +17,36 @@ class MySetting extends HookWidget {
   Widget build(BuildContext context) {
     var shadowColor = useState(Colors.grey.shade600);
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      child: InkWell(
-        onHover: (isHovered) {
-          shadowColor.value = isHovered ? Colors.black : Colors.grey.shade600;
-        },
-        child: Container(
-          width: 400,
-          height: 60,
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            color: getColorFromHex("#ffffff"),
-            boxShadow: [
-              BoxShadow(
-                color: shadowColor.value,
-                spreadRadius: 1,
-                blurRadius: 1,
-                blurStyle: BlurStyle.outer
-              )
-            ]
-          ),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Column(
-              children: [
-                MyText(
-                  text: title, 
-                  size: 14,
-                ),
-                const SizedBox(height: 10,),
-                ...(options.map((option) {
-                  return (
-                    option
-                  );
-                }))
-              ],
+    return Container(
+      width: 400,
+      height: 60,
+      padding: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        color: getColorFromHex("#ffffff"),
+        boxShadow: [
+          BoxShadow(
+            color: shadowColor.value,
+            spreadRadius: 1,
+            blurRadius: 1,
+            blurStyle: BlurStyle.outer
+          )
+        ]
+      ),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Column(
+          children: [
+            MyText(
+              text: title, 
+              size: 14,
             ),
-          ),
+            const SizedBox(height: 10,),
+            ...(options.map((option) {
+              return (
+                option
+              );
+            }))
+          ],
         ),
       ),
     );
