@@ -30,7 +30,7 @@ class MyRichText extends StatelessWidget {
                 text: myText.text,
                 recognizer: TapGestureRecognizer()..onTap = recognizer,
                 style: TextStyle(
-                    color: getColorFromHex(myText.color),
+                    color: getColorFromHex(myText.color ?? "#000000"),
                     fontSize: myText.size
                 ),
               )

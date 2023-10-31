@@ -53,7 +53,7 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: SettingsPage(
           key: args.key,
-          bloc: args.bloc,
+          userBloc: args.userBloc,
           images: args.images,
           user: args.user,
         ),
@@ -200,7 +200,7 @@ class LoginRouteArgs {
 class SettingsRoute extends PageRouteInfo<SettingsRouteArgs> {
   SettingsRoute({
     Key? key,
-    required UserBloc bloc,
+    required UserBloc userBloc,
     required List<dynamic> images,
     required LocalUser user,
     List<PageRouteInfo>? children,
@@ -208,7 +208,7 @@ class SettingsRoute extends PageRouteInfo<SettingsRouteArgs> {
           SettingsRoute.name,
           args: SettingsRouteArgs(
             key: key,
-            bloc: bloc,
+            userBloc: userBloc,
             images: images,
             user: user,
           ),
@@ -224,14 +224,14 @@ class SettingsRoute extends PageRouteInfo<SettingsRouteArgs> {
 class SettingsRouteArgs {
   const SettingsRouteArgs({
     this.key,
-    required this.bloc,
+    required this.userBloc,
     required this.images,
     required this.user,
   });
 
   final Key? key;
 
-  final UserBloc bloc;
+  final UserBloc userBloc;
 
   final List<dynamic> images;
 
@@ -239,7 +239,7 @@ class SettingsRouteArgs {
 
   @override
   String toString() {
-    return 'SettingsRouteArgs{key: $key, bloc: $bloc, images: $images, user: $user}';
+    return 'SettingsRouteArgs{key: $key, userBloc: $userBloc, images: $images, user: $user}';
   }
 }
 

@@ -5,7 +5,6 @@ import 'package:cleanarchdemo/presentation/bloc/user_bloc.dart';
 import 'package:cleanarchdemo/presentation/components/alert.dart';
 import 'package:cleanarchdemo/presentation/components/image_gallary.dart';
 import 'package:cleanarchdemo/presentation/components/text.dart';
-import 'package:cleanarchdemo/presentation/screens/settings.dart';
 import 'package:flutter/material.dart';
 
 class MySideBar extends StatelessWidget {
@@ -13,16 +12,17 @@ class MySideBar extends StatelessWidget {
     super.key,
     required this.images,
     required this.user,
-    required this.bloc
+    required this.userBloc
   });
 
   final List<dynamic> images;
   final LocalUser user;
-  final UserBloc bloc;
+  final UserBloc userBloc;
 
   @override
   Widget build(BuildContext context) {
     return  Container(
+      color: Theme.of(context).colorScheme.primary,
       padding: const EdgeInsets.all(20),
       child: Center(
         child: Column(
@@ -64,7 +64,13 @@ class MySideBar extends StatelessWidget {
             const SizedBox(height: 20,),
             GestureDetector(
               onTap: () {
-                context.router.push(SettingsRoute(bloc: bloc, images: images, user: user));
+                context.router.push(
+                  SettingsRoute(
+                    userBloc: userBloc,
+                    images: images, 
+                    user: user
+                  )
+                );
               },
               child: Row(
                 children: [
@@ -120,7 +126,7 @@ class MySideBar extends StatelessWidget {
             const SizedBox(height: 20,),
             GestureDetector(
               onTap: () {
-                bloc.add(const UserLogoutEvent());
+                userBloc.add(const UserLogoutEvent());
               },
               child: Row(
                 children: [
@@ -133,7 +139,7 @@ class MySideBar extends StatelessWidget {
             const SizedBox(height: 200,),
             MyText(text: "cleanarchdemo", size: 12),
             const SizedBox(height: 5,),
-            MyText(text: "V0.0.1", size: 12)
+            MyText(text: "V0.0.1", size: 12,)
           ],
         ) 
       ),

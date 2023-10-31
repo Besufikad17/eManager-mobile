@@ -22,10 +22,10 @@ class MyFilePicker extends StatelessWidget {
               height: 80,
               padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
-                color: getColorFromHex("#ffffff"),
-                boxShadow: const [
+                color:  Theme.of(context).colorScheme.primary,
+                boxShadow: [
                   BoxShadow(
-                    color: Colors.black,
+                    color: Theme.of(context).shadowColor,
                     spreadRadius: 1,
                     blurRadius: 1,
                     blurStyle: BlurStyle.outer
@@ -51,10 +51,10 @@ class MyFilePicker extends StatelessWidget {
               height: 80,
               padding: const EdgeInsets.all(2),
               decoration: BoxDecoration(
-                color: getColorFromHex("#ffffff"),
-                boxShadow: const [
+                color: Theme.of(context).colorScheme.primary,
+                boxShadow: [
                   BoxShadow(
-                    color: Colors.black,
+                    color: Theme.of(context).shadowColor,
                     spreadRadius: 1,
                     blurRadius: 1,
                     blurStyle: BlurStyle.outer
@@ -79,10 +79,10 @@ class MyFilePicker extends StatelessWidget {
         height: 60,
         padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
-          color: getColorFromHex("#ffffff"),
-          boxShadow: const [
+          color: Theme.of(context).primaryColor,
+          boxShadow: [
             BoxShadow(
-              color: Colors.black,
+              color: Theme.of(context).shadowColor,
               spreadRadius: 1,
               blurRadius: 1,
               blurStyle: BlurStyle.outer

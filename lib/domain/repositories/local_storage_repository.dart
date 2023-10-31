@@ -1,14 +1,24 @@
 import 'package:cleanarchdemo/data/datasources/local/local_response_data_service.dart';
+import 'package:cleanarchdemo/data/datasources/local/settings_data_service.dart';
 import 'package:hive/hive.dart';
 
 abstract class LocalStorageRepository {
-  final Box<LocalResponseData> box;
+  final Box<LocalResponseData> localResponseBox;
+  final Box<SettingsData> settingsBox;
 
-  const LocalStorageRepository(this.box);
+  const LocalStorageRepository(this.localResponseBox, this.settingsBox);
 
-  void addData(LocalResponseData data);
+  // local user data
+  void addLocalResponseData(LocalResponseData data);
 
-  Future<LocalResponseData?> getData();
+  Future<LocalResponseData?> getLocalResponseData();
 
-  void removeData();
+  void removeLocalResponseData();
+
+  // settings data  
+  void addSettingsData(SettingsData data);
+
+  Future<SettingsData?> getSettingsData();
+
+  void removeSettingsData();
 }

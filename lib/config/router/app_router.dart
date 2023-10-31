@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cleanarchdemo/data/datasources/local/local_user_data_service.dart';
+import 'package:cleanarchdemo/presentation/bloc/theme_bloc.dart';
 import 'package:cleanarchdemo/presentation/bloc/user_bloc.dart';
 import 'package:cleanarchdemo/presentation/screens/change_password.dart';
 import 'package:cleanarchdemo/presentation/screens/home.dart';

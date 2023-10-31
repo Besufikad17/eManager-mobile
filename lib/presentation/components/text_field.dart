@@ -12,8 +12,8 @@ class MyTextField extends HookWidget {
     required this.fontSize,
     required this.height,
     required this.width,
-    required this.focusColor,
-    required this.borderColor,
+    this.focusColor,
+    this.borderColor,
     required this.enabledBorderWidth,
     required this.focusedBorderWidth,
     this.regexChecker,
@@ -26,8 +26,8 @@ class MyTextField extends HookWidget {
   final double fontSize;
   final double width;
   final double height;
-  final String focusColor;
-  final String borderColor;
+  final String? focusColor;
+  final String? borderColor;
   final double enabledBorderWidth;
   final double focusedBorderWidth;
   final Function(String)? regexChecker;
@@ -61,7 +61,7 @@ class MyTextField extends HookWidget {
               decoration: InputDecoration(  
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: getColorFromHex(borderColor),
+                    color: borderColor != null ? getColorFromHex(borderColor!) : Theme.of(context).colorScheme.onPrimary,
                     width: enabledBorderWidth
                   )
                 ),

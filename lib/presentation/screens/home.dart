@@ -1,34 +1,66 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cleanarchdemo/config/router/app_router.dart';
 import 'package:cleanarchdemo/data/datasources/local/local_user_data_service.dart';
+import 'package:cleanarchdemo/data/datasources/local/settings_data_service.dart';
 import 'package:cleanarchdemo/data/repository/local_storage_repository_impl.dart';
 import 'package:cleanarchdemo/domain/repositories/user_api_repository.dart';
 import 'package:cleanarchdemo/locator.dart';
+import 'package:cleanarchdemo/presentation/bloc/theme_bloc.dart';
 import 'package:cleanarchdemo/presentation/bloc/user_bloc.dart';
+import 'package:cleanarchdemo/presentation/components/app_bar.dart';
 import 'package:cleanarchdemo/presentation/components/side_bar.dart';
 import 'package:cleanarchdemo/utils/resources/colors.dart';
+import 'package:cleanarchdemo/utils/resources/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 @RoutePage()
-class HomePage extends StatelessWidget {
+class HomePage extends HookWidget {
   const HomePage({
     super.key,
   });
 
   Future<String> getToken() async {
-    return (await locator<LocalStorageRepositoryImpl>().getData())!.token;
+    return (await locator<LocalStorageRepositoryImpl>().getLocalResponseData())!.token;
   }
 
   Future<LocalUser> getUser() async {
-    return (await locator<LocalStorageRepositoryImpl>().getData())!.user;
+    return (await locator<LocalStorageRepositoryImpl>().getLocalResponseData())!.user;
   } 
+
 
   @override
   Widget build(BuildContext context) {
+    var themeIcon = useState(
+      locator<AppTheme>() == AppTheme.light ? Icons.dark_mode : Icons.light_mode
+    );
+    
     return Scaffold(
-      body: FutureBuilder(
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(80.0),
+        child: MyAppBar(
+          title: "Home",
+          actions: [
+            IconButton(
+              onPressed: () {
+                if(locator<AppTheme>() == AppTheme.light) {
+                  themeIcon.value = Icons.dark_mode;
+                  locator<ThemeBloc>().add(const ThemeChanged(AppTheme.dark));
+                  ThemeManager().toggleTheme(true);
+                }else {
+                  themeIcon.value = Icons.light_mode;
+                  locator<ThemeBloc>().add(const ThemeChanged(AppTheme.light));
+                  ThemeManager().toggleTheme(false);
+                }
+              }, 
+              icon: Icon(themeIcon.value)
+            )
+          ],
+        ),
+      ),
+      drawer:  FutureBuilder(
         future: Future.wait([getUser(), getToken()]),
         builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
           return BlocProvider(
@@ -60,7 +92,23 @@ class HomePage extends StatelessWidget {
               },
             ),
           );
-        }
+        },
+      ),
+      body: Container(
+        color: Theme.of(context).colorScheme.primary,
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(height: 50,),
+              FutureBuilder(
+                future: getToken(), 
+                builder: ((BuildContext context, snapshot) {
+                  return Text(snapshot.data ?? "no token!!");
+                })
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -101,26 +149,9 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildInitialWithPFP(BuildContext context, UserBloc bloc, List<dynamic> images, LocalUser user) {
-    return SliderDrawer(
-        slider: MySideBar(images: images, user: user, bloc: bloc),
-        appBar: const SliderAppBar(
-          title: Text("Home", style: TextStyle(fontWeight: FontWeight.bold),),
-          isTitleCenter: true,
-        ),
-        child: Center(
-          child: Column(
-            children: [
-              const SizedBox(height: 50,),
-              FutureBuilder(
-                future: getToken(), 
-                builder: ((BuildContext context, snapshot) {
-                  return Text(snapshot.data ?? "no token!!");
-                })
-              )
-            ],
-          ),
-        ),
-      );
+  Widget _buildInitialWithPFP(BuildContext context, UserBloc userBloc, List<dynamic> images, LocalUser user) {
+    return Drawer(
+      child: MySideBar(images: images, user: user, userBloc: userBloc),
+    );
   }
 }

@@ -1,25 +1,42 @@
 import 'package:cleanarchdemo/data/datasources/local/local_response_data_service.dart';
+import 'package:cleanarchdemo/data/datasources/local/settings_data_service.dart';
 import 'package:cleanarchdemo/domain/repositories/local_storage_repository.dart';
 import 'package:hive/hive.dart';
 
 class LocalStorageRepositoryImpl extends LocalStorageRepository {
-  final Box<LocalResponseData> box;
+  final Box<LocalResponseData> localResponseBox;
+  final Box<SettingsData> settingsBox;
 
-  const LocalStorageRepositoryImpl(this.box) : super(box);
+  const LocalStorageRepositoryImpl(this.localResponseBox, this.settingsBox) : super(localResponseBox, settingsBox);
 
   @override
-  void addData(LocalResponseData data) async {
-    await box.put("response", data);
+  void addLocalResponseData(LocalResponseData data) async {
+    await localResponseBox.put("response", data);
   }
 
   @override
-  Future<LocalResponseData?> getData() async {
-    return box.get("response");
+  Future<LocalResponseData?> getLocalResponseData() async {
+    return localResponseBox.get("response");
   } 
 
   @override
-  void removeData() async {
-    await box.delete("response");
+  void removeLocalResponseData() async {
+    await localResponseBox.delete("response");
+  }
+
+  @override
+  void addSettingsData(SettingsData data) async {
+    await settingsBox.put("settings", data);
+  }
+
+  @override
+  Future<SettingsData?> getSettingsData() async {
+    return settingsBox.get("settings");
+  }
+
+  @override
+  void removeSettingsData() async {
+    await settingsBox.delete("settings");
   }
 
 }

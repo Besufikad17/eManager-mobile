@@ -99,7 +99,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     on<UserLogoutEvent>((event, emit) {
       emit(const UserLoading());
-      locator.get<LocalStorageRepositoryImpl>().removeData();
+      locator.get<LocalStorageRepositoryImpl>().removeLocalResponseData();
       emit(const UserLoggedOut());
     });
 

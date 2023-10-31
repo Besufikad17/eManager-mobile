@@ -52,7 +52,7 @@ class SignUpPage extends StatelessWidget {
                       ),
                     );
                   }else if(state is UserLoaded) {
-                    locator<LocalStorageRepositoryImpl>().addData(
+                    locator<LocalStorageRepositoryImpl>().addLocalResponseData(
                       LocalResponseData(
                         LocalUser(
                           state.user.id,

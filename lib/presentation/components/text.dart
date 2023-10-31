@@ -9,8 +9,9 @@ class MyText extends StatelessWidget {
   bool isUnderline;
   bool isLight;
   double width;
-  String color;
+  String? color;
   TextOverflow overflow;
+  TextStyle? style;
 
   MyText({
     super.key,
@@ -20,8 +21,9 @@ class MyText extends StatelessWidget {
     this.isUnderline = false,
     this.isLight = false,
     this.width = 0,
-    this.color = "#000000",
-    this.overflow = TextOverflow.ellipsis
+    this.color,
+    this.overflow = TextOverflow.ellipsis,
+    this.style
   });
 
   FontWeight getFontWeight() {
@@ -38,12 +40,18 @@ class MyText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(text,
       overflow: overflow,
-      style: TextStyle(
-        fontSize: size,
-        decoration: isUnderline ? TextDecoration.underline : TextDecoration.none,
-        fontWeight: getFontWeight(),
-        color: getColorFromHex(color),
-      ),
+      style: style != null ?  
+        style!.copyWith(
+          decoration: isUnderline ? TextDecoration.underline : TextDecoration.none,
+          fontWeight: getFontWeight(),
+          color: color != null ? getColorFromHex(color!) :  Theme.of(context).colorScheme.onPrimary
+        ) : 
+        TextStyle(
+          fontSize: size,
+          decoration: isUnderline ? TextDecoration.underline : TextDecoration.none,
+          fontWeight: getFontWeight(),
+          color: color != null ? getColorFromHex(color!) :  Theme.of(context).colorScheme.onPrimary
+        ),
       textAlign: TextAlign.center
     );
   }
