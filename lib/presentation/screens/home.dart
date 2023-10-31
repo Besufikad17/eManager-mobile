@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cleanarchdemo/config/router/app_router.dart';
+import 'package:cleanarchdemo/data/datasources/local/local_response_data_service.dart';
 import 'package:cleanarchdemo/data/datasources/local/local_user_data_service.dart';
 import 'package:cleanarchdemo/data/datasources/local/settings_data_service.dart';
 import 'package:cleanarchdemo/data/repository/local_storage_repository_impl.dart';
@@ -21,12 +22,8 @@ class HomePage extends HookWidget {
     super.key,
   });
 
-  Future<String> getToken() async {
-    return (await locator<LocalStorageRepositoryImpl>().getLocalResponseData())!.token;
-  }
-
-  Future<LocalUser> getUser() async {
-    return (await locator<LocalStorageRepositoryImpl>().getLocalResponseData())!.user;
+  Future<LocalResponseData> getUser() async {
+    return (await locator<LocalStorageRepositoryImpl>().getLocalResponseData())!;
   } 
 
 
@@ -61,37 +58,41 @@ class HomePage extends HookWidget {
         ),
       ),
       drawer:  FutureBuilder(
-        future: Future.wait([getUser(), getToken()]),
-        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-          return BlocProvider(
-            create: (context) => UserBloc(locator<UserApiRepository>()),
-            child: BlocConsumer<UserBloc, UserState>(
-              listener: (context, state) => {},
-              builder: (BuildContext context, UserState state) {
-                if(state is UserInitial) {
-                  context.read<UserBloc>().add(
-                    GetPFP(
-                      snapshot.data![0].id.toString(), 
-                      snapshot.data![1]
-                    )
-                  );
-                }else if(state is UserLoading) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: getColorFromHex("#F0922E"),
-                    ),
-                  );
-                }else if(state is UserPFP) {
-                  return _buildInitialWithPFP(context, context.read<UserBloc>(), state.images, snapshot.data![0]);
-                }else if(state is UserLoggedOut) {
-                  context.router.push(const WelcomeRoute());
-                }else if(state is UserError) {
-                  _buildError(context, state.message!);
-                }
-                return Container();
-              },
-            ),
-          );
+        future: getUser(),
+        builder: (BuildContext context, snapshot) {
+          if(snapshot.data != null) {
+             return BlocProvider(
+              create: (context) => UserBloc(locator<UserApiRepository>()),
+              child: BlocConsumer<UserBloc, UserState>(
+                listener: (context, state) => {},
+                builder: (BuildContext context, UserState state) {
+                  if(state is UserInitial) {
+                    context.read<UserBloc>().add(
+                      GetPFP(
+                        snapshot.data!.user.id.toString(),
+                        snapshot.data!.token
+                      )
+                    );
+                  }else if(state is UserLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: getColorFromHex("#F0922E"),
+                      ),
+                    );
+                  }else if(state is UserPFP) {
+                    return _buildInitialWithPFP(context, context.read<UserBloc>(), state.images, snapshot.data!.user);
+                  }else if(state is UserLoggedOut) {
+                    context.router.push(const WelcomeRoute());
+                  }else if(state is UserError) {
+                    _buildError(context, state.message!);
+                  }
+                  return Container();
+                },
+              ),
+            );
+          }else {
+            return CircularProgressIndicator(color: Theme.of(context).colorScheme.primary,);
+          }
         },
       ),
       body: Container(
@@ -101,9 +102,13 @@ class HomePage extends HookWidget {
             children: [
               const SizedBox(height: 50,),
               FutureBuilder(
-                future: getToken(), 
+                future: getUser(), 
                 builder: ((BuildContext context, snapshot) {
-                  return Text(snapshot.data ?? "no token!!");
+                  if(snapshot.data != null) {
+                    return Text(snapshot.data!.token);
+                  }else {
+                    return CircularProgressIndicator(color: Theme.of(context).colorScheme.primary,);
+                  }
                 })
               )
             ],

@@ -1,14 +1,21 @@
+import 'dart:io';
+
 import 'package:cleanarchdemo/utils/constants/enums.dart';
-import 'package:cleanarchdemo/utils/resources/colors.dart';
 import 'package:flutter/material.dart';
 
 class MyFilePicker extends StatelessWidget {
   const MyFilePicker({
     super.key,
-    required this.type  
+    required this.type,
+    required this.image,
+    required this.pickFromGallery,
+    required this.pickFromCamera
   });
 
   final FileType type;
+  final File image;
+  final Function(File, FileType) pickFromGallery;
+  final Function(File, FileType) pickFromCamera;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +41,7 @@ class MyFilePicker extends StatelessWidget {
               ),
               child: IconButton(
                 onPressed: () {
-                
+                  pickFromGallery(image, type);
                 }, 
                 icon: const Icon(
                   Icons.camera,
@@ -63,7 +70,7 @@ class MyFilePicker extends StatelessWidget {
               ),
               child: IconButton(
                 onPressed: () {
-                
+                  pickFromGallery(image, type);
                 }, 
                 icon: const Icon(
                   Icons.browse_gallery,

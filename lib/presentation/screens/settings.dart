@@ -109,7 +109,7 @@ class SettingsPage extends HookWidget {
         child: BlocConsumer<UserBloc, UserState>(
           listener: (context, state) {},
           builder: (BuildContext context, UserState state) {
-            return _buildInitial(context, theme, lang, image, imageType);
+            return _buildInitial(context, theme, lang, image.value, imageType);
           },
         ),
       )
@@ -134,10 +134,15 @@ class SettingsPage extends HookWidget {
                         showDialog(
                           context: context, 
                           builder: (BuildContext context) {
-                            return const MyAlert(
+                            return MyAlert(
                               title: "Pick Image", 
                               type: AlertType.message, 
-                              body: MyFilePicker(type: FileType.Image)
+                              body: MyFilePicker(
+                                type: FileType.Image, 
+                                image: image,
+                                pickFromGallery: (p0, p1) => getImageFromCamera(p0, p1),     
+                                pickFromCamera:  (p0, p1) => getImageFromCamera(p0, p1),                         
+                              )
                             );
                           }
                         );
