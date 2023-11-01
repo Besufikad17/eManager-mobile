@@ -56,6 +56,7 @@ abstract class _$AppRouter extends RootStackRouter {
           userBloc: args.userBloc,
           images: args.images,
           user: args.user,
+          token: args.token,
         ),
       );
     },
@@ -203,6 +204,7 @@ class SettingsRoute extends PageRouteInfo<SettingsRouteArgs> {
     required UserBloc userBloc,
     required List<dynamic> images,
     required LocalUser user,
+    required String token,
     List<PageRouteInfo>? children,
   }) : super(
           SettingsRoute.name,
@@ -211,6 +213,7 @@ class SettingsRoute extends PageRouteInfo<SettingsRouteArgs> {
             userBloc: userBloc,
             images: images,
             user: user,
+            token: token,
           ),
           initialChildren: children,
         );
@@ -227,6 +230,7 @@ class SettingsRouteArgs {
     required this.userBloc,
     required this.images,
     required this.user,
+    required this.token,
   });
 
   final Key? key;
@@ -237,9 +241,11 @@ class SettingsRouteArgs {
 
   final LocalUser user;
 
+  final String token;
+
   @override
   String toString() {
-    return 'SettingsRouteArgs{key: $key, userBloc: $userBloc, images: $images, user: $user}';
+    return 'SettingsRouteArgs{key: $key, userBloc: $userBloc, images: $images, user: $user, token: $token}';
   }
 }
 

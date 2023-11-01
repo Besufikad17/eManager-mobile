@@ -11,7 +11,7 @@ abstract class BaseApiRepository {
   }) async {
     try {
       final httpResponse = await request();
-      if (httpResponse.response.statusCode == 201) {
+      if (httpResponse.response.statusCode == 201 || httpResponse.response.statusCode == 200) {
         return DataSuccess(httpResponse.data);
       } else {
         throw DioException(
@@ -21,7 +21,8 @@ abstract class BaseApiRepository {
       }  
     } on DioException catch (error) {
       final res = error.response;
-      return DataFailed(error, res!.data['message']);
+      print(res!.data);
+      return DataFailed(error, res!.data['message'] ?? res.data['message']);
     }
   } 
 }

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cleanarchdemo/data/repository/local_storage_repository_impl.dart';
 import 'package:cleanarchdemo/domain/models/requests/change_password_request.dart';
+import 'package:cleanarchdemo/domain/models/requests/edit_profile_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/forgot_password_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/user_login_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/user_signup_request.dart';
@@ -9,6 +10,7 @@ import 'package:cleanarchdemo/domain/models/user.dart';
 import 'package:cleanarchdemo/domain/repositories/user_api_repository.dart';
 import 'package:cleanarchdemo/locator.dart';
 import 'package:cleanarchdemo/utils/resources/data_state.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
 part 'user_event.dart';
@@ -111,6 +113,34 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
       if(response is DataSuccess) {
         emit(UserPFP(response.data!.images));
+      }else if(response is DataFailed) {
+        emit(UserError(response.message));
+      }
+    });
+
+    on<EditProfileEvent>((event, emit) async {
+      emit(const UserLoading());
+      final response = await _repository.editProfile(
+        id: event.id, 
+        request: EditProfileRequest(
+          event.user.fname!, 
+          event.user.lname!, 
+          event.user.email!, 
+          event.user.phoneNumber!
+        ), 
+        token: event.token
+      );
+
+      if(response is DataSuccess) {
+        emit(UserEdited(
+          User(
+            id: int.parse(response.data!.id),
+            fname: response.data!.fname,
+            lname: response.data!.lname,
+            email: response.data!.email,
+            phoneNumber: response.data!.phonenNumber
+          )
+        ));
       }else if(response is DataFailed) {
         emit(UserError(response.message));
       }

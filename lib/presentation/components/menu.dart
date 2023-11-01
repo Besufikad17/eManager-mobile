@@ -1,5 +1,4 @@
 import 'package:cleanarchdemo/presentation/components/text.dart';
-import 'package:cleanarchdemo/utils/resources/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -16,12 +15,13 @@ class MyMenu extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Theme.of(context).colorScheme.primary,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ...(options.map((option){
             return Padding(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(10),
               child: GestureDetector(
                 onTap: () {
                   onTap(option);
@@ -29,18 +29,8 @@ class MyMenu extends HookWidget {
                 child: Container(
                   width: 400,
                   height: 60,
+                  color: Theme.of(context).colorScheme.primary,
                   padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    color: getColorFromHex("#ffffff"),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black,
-                        spreadRadius: 1,
-                        blurRadius: 1,
-                        blurStyle: BlurStyle.outer
-                      )
-                    ]
-                  ),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: MyText(text: option, size: 14)

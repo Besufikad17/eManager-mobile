@@ -102,3 +102,14 @@ class GetPFP extends UserEvent {
   @override
   List<Object?> get props => [id];
 }
+
+class EditProfileEvent extends UserEvent {
+  final String id;
+  final User user;
+  final String token;
+
+  const EditProfileEvent(this.id, this.user, this.token);
+
+  @override
+  List<Object?> get props => [id, user, token];
+}

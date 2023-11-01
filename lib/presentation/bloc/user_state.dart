@@ -68,6 +68,14 @@ final class UserPFP extends UserState {
   List<Object?> get props => [images];
 }
 
+final class UserEdited extends UserState {
+  final User user;
+  const UserEdited(this.user);
+
+  @override
+  List<Object?> get props => [user];
+}
+
 final class UserError extends UserState {
   final String? message;
 

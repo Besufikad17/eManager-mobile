@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:cleanarchdemo/data/datasources/local/local_response_data_service.dart';
 import 'package:cleanarchdemo/data/datasources/local/local_user_data_service.dart';
 import 'package:cleanarchdemo/data/datasources/local/settings_data_service.dart';
+import 'package:cleanarchdemo/data/repository/local_storage_repository_impl.dart';
+import 'package:cleanarchdemo/domain/models/user.dart';
 import 'package:cleanarchdemo/domain/repositories/user_api_repository.dart';
 import 'package:cleanarchdemo/locator.dart';
 import 'package:cleanarchdemo/presentation/bloc/theme_bloc.dart';
@@ -27,12 +30,14 @@ class SettingsPage extends HookWidget {
     super.key,
     required this.userBloc,
     required this.images,
-    required this.user  
+    required this.user,
+    required this.token  
   });
 
   final List<dynamic> images;
   final LocalUser user;
   final UserBloc userBloc;
+  final String token;
 
   final TextEditingController emailTextField = TextEditingController();
   final TextEditingController fullNameTextField = TextEditingController();
@@ -101,7 +106,6 @@ class SettingsPage extends HookWidget {
         child: MySideBar(
           userBloc: userBloc,
           images: images,
-          user: user,
         ),
       ),
       body: BlocProvider(
@@ -109,7 +113,25 @@ class SettingsPage extends HookWidget {
         child: BlocConsumer<UserBloc, UserState>(
           listener: (context, state) {},
           builder: (BuildContext context, UserState state) {
-            return _buildInitial(context, theme, lang, image.value, imageType);
+            if(state is UserEdited) {
+              locator<LocalStorageRepositoryImpl>().addLocalResponseData(
+                LocalResponseData(
+                  LocalUser(
+                    state.user.id, 
+                    state.user.fname, 
+                    state.user.lname, 
+                    state.user.email, 
+                    state.user.phoneNumber, null, null
+                  ),
+                  token
+                )
+              );
+              return _buildInitial(context, theme, lang, image, imageType);
+            } else if(state is UserLoading) {
+              return CircularProgressIndicator(color: Theme.of(context).colorScheme.primary,);
+            } else {
+              return _buildInitial(context, theme, lang, image.value, imageType);
+            }           
           },
         ),
       )
@@ -210,7 +232,36 @@ class SettingsPage extends HookWidget {
                           height: 35,
                           bgcolor: "#83A598",
                           fgcolor: "#ffffff",
-                          onPressed: () {}),
+                          onPressed: () {
+                            if(
+                              isValidFullName(fullNameTextField.text) && 
+                              isValidEmail(emailTextField.text) && 
+                              isValidPhoneNumber(phoneNumberTextField.text)) {
+                                userBloc.add(
+                                  EditProfileEvent(
+                                    user.id.toString(), 
+                                    User(
+                                      fname: fullNameTextField.text.split(" ")[0],
+                                      lname: fullNameTextField.text.split(" ")[1],
+                                      email: emailTextField.text,
+                                      phoneNumber: phoneNumberTextField.text
+                                    ),
+                                    token
+                                  )
+                                );
+                            } else {
+                              showDialog(
+                                context: context, 
+                                builder: (BuildContext context) {
+                                  return const MyAlert(
+                                    title: "Invalid inputs", 
+                                    type: AlertType.error, 
+                                    body: Text("Please enter valid inputs!!")
+                                  );
+                                }
+                              );
+                            }
+                          }),
                         const SizedBox(
                           width: 20,
                         ),

@@ -8,7 +8,9 @@ import 'package:cleanarchdemo/domain/repositories/user_api_repository.dart';
 import 'package:cleanarchdemo/locator.dart';
 import 'package:cleanarchdemo/presentation/bloc/theme_bloc.dart';
 import 'package:cleanarchdemo/presentation/bloc/user_bloc.dart';
+import 'package:cleanarchdemo/presentation/components/alert.dart';
 import 'package:cleanarchdemo/presentation/components/app_bar.dart';
+import 'package:cleanarchdemo/presentation/components/menu.dart';
 import 'package:cleanarchdemo/presentation/components/side_bar.dart';
 import 'package:cleanarchdemo/utils/resources/colors.dart';
 import 'package:cleanarchdemo/utils/resources/theme_manager.dart';
@@ -26,12 +28,16 @@ class HomePage extends HookWidget {
     return (await locator<LocalStorageRepositoryImpl>().getLocalResponseData())!;
   } 
 
+  void changeLanguage(option, lang) {
+    lang.value = option;
+  }
 
   @override
   Widget build(BuildContext context) {
     var themeIcon = useState(
       locator<AppTheme>() == AppTheme.light ? Icons.dark_mode : Icons.light_mode
     );
+    var lang  = useState("English");
     
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -53,6 +59,24 @@ class HomePage extends HookWidget {
                 }
               }, 
               icon: Icon(themeIcon.value)
+            ),
+            IconButton(
+              onPressed: () {
+                showDialog(
+                  context:  context,
+                  builder: (BuildContext context){
+                    return MyAlert(
+                      title: "Change Language", 
+                      type: AlertType.message, 
+                      body: MyMenu(
+                        options: const ["English", "አማርኛ"], 
+                        onTap: (option) => changeLanguage(option, lang)
+                      )
+                    );
+                  }
+                );
+              },
+              icon: const Icon(Icons.translate)
             )
           ],
         ),
@@ -156,7 +180,7 @@ class HomePage extends HookWidget {
 
   Widget _buildInitialWithPFP(BuildContext context, UserBloc userBloc, List<dynamic> images, LocalUser user) {
     return Drawer(
-      child: MySideBar(images: images, user: user, userBloc: userBloc),
+      child: MySideBar(images: images, userBloc: userBloc),
     );
   }
 }
