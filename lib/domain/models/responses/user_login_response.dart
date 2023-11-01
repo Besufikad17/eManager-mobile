@@ -1,10 +1,11 @@
 import 'package:cleanarchdemo/domain/models/user.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_login_response.g.dart';
 
 @JsonSerializable()
-class UserLoginResponse {
+class UserLoginResponse extends Equatable {
   final User? user;
   final String? token;
   final String? message;
@@ -26,9 +27,6 @@ class UserLoginResponse {
       'message': message ?? ''
     };
   }
-
-  @override
-  bool get stringify => true;
 
   @override
   List<Object?> get props => [user, token];
