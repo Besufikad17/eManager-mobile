@@ -180,7 +180,7 @@ class HomePage extends HookWidget {
 
   Widget _buildInitialWithPFP(BuildContext context, UserBloc userBloc, List<dynamic> images, LocalUser user) {
     return Drawer(
-      child: MySideBar(images: images, userBloc: userBloc),
+      child: MySideBar(images: images),
     );
   }
 }

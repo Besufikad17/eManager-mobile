@@ -6,6 +6,7 @@ import 'package:cleanarchdemo/domain/models/responses/change_password_response.d
 import 'package:cleanarchdemo/domain/models/responses/edit_profile_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/forgot_password_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/get_pfp_response.dart';
+import 'package:cleanarchdemo/domain/models/responses/get_user_by_id_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/verification_response.dart';
 import 'package:cleanarchdemo/utils/resources/data_state.dart';
 import 'package:cleanarchdemo/domain/models/responses/user_signup_response.dart';
@@ -41,6 +42,11 @@ abstract class UserApiRepository {
   });
 
   Future<DataState<GetPFPResponse>> getPFPs({
+    required String id,
+    required String token
+  });
+
+  Future<DataState<GetUserByIdResponse>> getUserById({
     required String id,
     required String token
   });

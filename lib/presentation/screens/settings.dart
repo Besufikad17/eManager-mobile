@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:cleanarchdemo/config/router/app_router.dart';
 import 'package:cleanarchdemo/data/datasources/local/local_response_data_service.dart';
 import 'package:cleanarchdemo/data/datasources/local/local_user_data_service.dart';
 import 'package:cleanarchdemo/data/datasources/local/settings_data_service.dart';
@@ -29,19 +30,13 @@ class SettingsPage extends HookWidget {
   SettingsPage({
     super.key,
     required this.userBloc,
-    required this.images,
-    required this.user,
-    required this.token  
+    required this.images, 
   });
 
   final List<dynamic> images;
-  final LocalUser user;
   final UserBloc userBloc;
-  final String token;
 
-  final TextEditingController emailTextField = TextEditingController();
-  final TextEditingController fullNameTextField = TextEditingController();
-  final TextEditingController phoneNumberTextField = TextEditingController();
+
 
   final picker = ImagePicker();
 
@@ -64,6 +59,10 @@ class SettingsPage extends HookWidget {
     }
   }
 
+  Future<LocalResponseData> getUser() async {
+    return (await locator<LocalStorageRepositoryImpl>().getLocalResponseData())!;
+  } 
+
   @override
   Widget build(BuildContext context) {
     var theme = useState("Light");
@@ -73,10 +72,6 @@ class SettingsPage extends HookWidget {
     var themeIcon = useState(
       locator<AppTheme>() == AppTheme.light ? Icons.dark_mode : Icons.light_mode
     );
-
-    fullNameTextField.text = "${user.fname} ${user.lname}";
-    emailTextField.text = user.email ?? "";
-    phoneNumberTextField.text = user.phonenumber ?? "";
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
@@ -104,41 +99,100 @@ class SettingsPage extends HookWidget {
       ),
       drawer: Drawer(
         child: MySideBar(
-          userBloc: userBloc,
           images: images,
         ),
       ),
-      body: BlocProvider(
-        create: (context) => UserBloc(locator<UserApiRepository>()),
-        child: BlocConsumer<UserBloc, UserState>(
-          listener: (context, state) {},
-          builder: (BuildContext context, UserState state) {
-            if(state is UserEdited) {
-              locator<LocalStorageRepositoryImpl>().addLocalResponseData(
-                LocalResponseData(
-                  LocalUser(
-                    state.user.id, 
-                    state.user.fname, 
-                    state.user.lname, 
-                    state.user.email, 
-                    state.user.phoneNumber, null, null
-                  ),
-                  token
+      body: FutureBuilder(
+        future: getUser(),
+        builder: (BuildContext context, snapshot) {
+          if(snapshot.data != null) {
+            return BlocProvider(
+              create: (context) => UserBloc(locator<UserApiRepository>())..add(
+                GetUserById(
+                  snapshot.data!.user.id.toString(), 
+                  snapshot.data!.token
                 )
-              );
-              return _buildInitial(context, theme, lang, image, imageType);
-            } else if(state is UserLoading) {
-              return CircularProgressIndicator(color: Theme.of(context).colorScheme.primary,);
-            } else {
-              return _buildInitial(context, theme, lang, image.value, imageType);
-            }           
-          },
-        ),
+              ),
+              child: BlocConsumer<UserBloc, UserState>(
+                listener: (context, state) {},
+                builder: (BuildContext context, UserState state) {
+                  if(state is UserLoaded) {
+                    final localUser = LocalUser(
+                      state.user.id, 
+                      state.user.fname, 
+                      state.user.lname, 
+                      state.user.email, 
+                      state.user.phoneNumber, null, null
+                    );
+                    locator<LocalStorageRepositoryImpl>().addLocalResponseData(
+                      LocalResponseData(
+                        localUser,
+                        snapshot.data!.token
+                      )
+                    );
+                    return _buildInitial(context, theme, lang, image, imageType, localUser, snapshot.data!.token);
+                  } else if(state is UserError) {
+                    _buildError(context, state.message!);
+                  } else if(state is UserLoading) {
+                    return CircularProgressIndicator(color: Theme.of(context).colorScheme.primary,);
+                  } 
+                  return Container();       
+                },
+              ),
+            );
+          } else {
+            return CircularProgressIndicator(color: Theme.of(context).colorScheme.primary,);
+          }
+        } 
       )
     );
   }
 
-  Widget _buildInitial(BuildContext context, theme, lang, image, imageType) {
+  void _buildError(BuildContext context, String message) async {
+    await Future.delayed(const Duration(microseconds: 1));
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: SizedBox(
+          height: 30, // Adjust the height as needed
+          child: Row(
+            children: [
+              const Icon(Icons.error, color: Colors.white),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(color: Colors.white),
+                  overflow: TextOverflow.visible,
+                ),
+              ),
+            ],
+          ),
+        ),
+        backgroundColor: Colors.blue,
+        duration: const Duration(seconds: 3),
+        action: SnackBarAction(
+          label: 'Dismiss',
+          textColor: Colors.white,
+          backgroundColor: Colors.black,
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            context.read<UserBloc>().add(const UserLoginLoading());
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInitial(BuildContext context, theme, lang, image, imageType, LocalUser user, token) {
+    TextEditingController emailTextField = TextEditingController();
+    TextEditingController fullNameTextField = TextEditingController();
+    TextEditingController phoneNumberTextField = TextEditingController();
+    
+    fullNameTextField.text = "${user.fname} ${user.lname}";
+    emailTextField.text = user.email!;
+    phoneNumberTextField.text = user.phonenumber!;
+
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(40),
@@ -249,6 +303,7 @@ class SettingsPage extends HookWidget {
                                     token
                                   )
                                 );
+                                context.router.push(const HomeRoute());
                             } else {
                               showDialog(
                                 context: context, 

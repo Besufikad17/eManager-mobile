@@ -113,3 +113,13 @@ class EditProfileEvent extends UserEvent {
   @override
   List<Object?> get props => [id, user, token];
 }
+
+class GetUserById extends UserEvent {
+  final String id;
+  final String token;
+
+  const GetUserById(this.id, this.token);
+
+  @override
+  List<Object?> get props => [id, token];
+}

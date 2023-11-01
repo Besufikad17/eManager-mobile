@@ -8,6 +8,7 @@ import 'package:cleanarchdemo/domain/models/responses/change_password_response.d
 import 'package:cleanarchdemo/domain/models/responses/edit_profile_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/forgot_password_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/get_pfp_response.dart';
+import 'package:cleanarchdemo/domain/models/responses/get_user_by_id_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/verification_response.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
@@ -52,6 +53,12 @@ abstract class UserApiService {
   Future<HttpResponse<EditProfileResponse>> editProfile({
     @Path() required String id,
     @Body() required EditProfileRequest request,
+    @Header('Authorization') required String token
+  });
+
+  @GET('/user/{id}')
+  Future<HttpResponse<GetUserByIdResponse>> getUserById({
+    @Path() required String id,
     @Header('Authorization') required String token
   });
 

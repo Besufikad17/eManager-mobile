@@ -10,7 +10,6 @@ import 'package:cleanarchdemo/domain/models/user.dart';
 import 'package:cleanarchdemo/domain/repositories/user_api_repository.dart';
 import 'package:cleanarchdemo/locator.dart';
 import 'package:cleanarchdemo/utils/resources/data_state.dart';
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
 part 'user_event.dart';
@@ -132,18 +131,39 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
 
       if(response is DataSuccess) {
-        emit(UserEdited(
+        emit(UserLoaded(
           User(
             id: int.parse(response.data!.id),
             fname: response.data!.fname,
             lname: response.data!.lname,
             email: response.data!.email,
             phoneNumber: response.data!.phonenNumber
-          )
+          ),
+          event.token
         ));
       }else if(response is DataFailed) {
         emit(UserError(response.message));
       }
     });
+
+    on<GetUserById>((event, emit) async {
+      emit(const UserLoading());
+      final response = await _repository.getUserById(id: event.id, token: event.token);
+
+      if (response is DataSuccess) {
+        final user =  User(
+          id: int.parse(response.data!.id),
+          fname: response.data!.fname,
+          lname: response.data!.lname,
+          email: response.data!.email,
+          phoneNumber: response.data!.phonenNumber
+        );
+        emit(UserLoaded(user, event.token));
+      } else if(response is DataFailed) {
+        emit(UserError(response.message));
+      }
+    });
   }
 }
+
+
