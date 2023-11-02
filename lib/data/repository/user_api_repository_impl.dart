@@ -3,6 +3,7 @@ import 'package:cleanarchdemo/domain/models/requests/edit_profile_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/forgot_password_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/verification_request.dart';
 import 'package:cleanarchdemo/domain/models/responses/change_password_response.dart';
+import 'package:cleanarchdemo/domain/models/responses/delete_account_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/edit_profile_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/forgot_password_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/get_pfp_response.dart';
@@ -112,6 +113,19 @@ class UserApiRepositoryImpl extends BaseApiRepository implements UserApiReposito
   }) {
     return getStateOf(
       request: () => _apiService.getUserById(
+        id: id, 
+        token: "Bearer $token"
+      )
+    );
+  }
+
+  @override
+  Future<DataState<DeleteAccountResponse>> deleteAccount({
+    required String id,
+    required String token
+  }) {
+    return getStateOf(
+      request: () => _apiService.deleteAcount(
         id: id, 
         token: "Bearer $token"
       )

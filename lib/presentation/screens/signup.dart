@@ -129,8 +129,7 @@ class SignUpPage extends StatelessWidget {
               children: [
                 MyText(
                   text: "Regis",
-                  size: 26,
-                  color: "#000000",
+                  size: 26
                 ),
                 MyText(
                   text: "ter",
@@ -149,8 +148,6 @@ class SignUpPage extends StatelessWidget {
               fontSize: 14,
               height: 40,
               width: 300,
-              focusColor: "#000000",
-              borderColor: "#000000",
               enabledBorderWidth: 1,
               focusedBorderWidth: 1.5,
               textEditingController: fullNameTextField,
@@ -163,8 +160,6 @@ class SignUpPage extends StatelessWidget {
             fontSize: 14,
             height: 40,
             width: 300,
-            focusColor: "#000000",
-            borderColor: "#000000",
             enabledBorderWidth: 1,
             focusedBorderWidth: 1.5,
             textEditingController: emailTextField,
@@ -177,8 +172,6 @@ class SignUpPage extends StatelessWidget {
             fontSize: 14,
             height: 40,
             width: 300,
-            focusColor: "#000000",
-            borderColor: "#000000",
             enabledBorderWidth: 1,
             focusedBorderWidth: 1.5,
             textEditingController: phoneNumberTextField,
@@ -191,8 +184,6 @@ class SignUpPage extends StatelessWidget {
             fontSize: 14,
             height: 40,
             width: 300,
-            focusColor: "#000000",
-            borderColor: "#000000",
             enabledBorderWidth: 1,
             focusedBorderWidth: 1.5,
             textEditingController: passwordTextField,
@@ -209,6 +200,7 @@ class SignUpPage extends StatelessWidget {
               borderWidth: 2,
               width: 300,
               height: 40,
+              borderRadius: 5,
               onPressed: () {
                 if(
                   isValidEmail(emailTextField.text) &&

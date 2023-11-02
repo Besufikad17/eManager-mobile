@@ -5,5 +5,5 @@ Color getColorFromHex(String hex) {
 }
 
 String toHex(Color color) {
-  return '#${color.value.toRadixString(16)}';
+  return '#${(color.value.toRadixString(16))}';
 }

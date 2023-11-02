@@ -108,8 +108,7 @@ class ForgotPasswordPage extends StatelessWidget {
             children: [
               MyText(
                 text: "Forgot",
-                size: 26,
-                color: "#000000",
+                size: 26
               ),
               MyText(
                   text: "Password",
@@ -128,8 +127,6 @@ class ForgotPasswordPage extends StatelessWidget {
             placeholder: "xyz@email.com", 
             type: "email",
             fontSize: 14,
-            focusColor: "#000000",
-            borderColor: "#000000",
             enabledBorderWidth: 1,
             focusedBorderWidth: 1.5,
             regexChecker: isValidEmail,
@@ -144,6 +141,7 @@ class ForgotPasswordPage extends StatelessWidget {
             bgcolor: "#F0922E",
             fgcolor: "#ffffff",
             borderWidth: 2,
+            borderRadius: 5,
             width: 300,
             height: 40,
             onPressed: () {

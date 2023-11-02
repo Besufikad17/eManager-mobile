@@ -114,8 +114,7 @@ class ChangePasswordPage extends StatelessWidget {
           children: [
             MyText(
               text: "Change",
-              size: 26,
-              color: "#000000",
+              size: 26
             ),
             MyText(
                 text: "Password",
@@ -134,8 +133,6 @@ class ChangePasswordPage extends StatelessWidget {
           placeholder: "no 1-8", 
           type: "password",
           fontSize: 14,
-          focusColor: "#000000",
-          borderColor: "#000000",
           enabledBorderWidth: 1,
           focusedBorderWidth: 1.5,
           regexChecker: isValidPassword,
@@ -151,8 +148,6 @@ class ChangePasswordPage extends StatelessWidget {
           height: 40,
           placeholder: "don't forget the new one!!", 
           fontSize: 14,
-          focusColor: "#000000",
-          borderColor: "#000000",
           enabledBorderWidth: 1,
           focusedBorderWidth: 1.5,
           regexChecker: isValidPassword,
@@ -167,6 +162,7 @@ class ChangePasswordPage extends StatelessWidget {
           bgcolor: "#F0922E",
           fgcolor: "#ffffff",
           borderWidth: 2,
+          borderRadius: 5,
           width: 300,
           height: 40,
           onPressed: () {

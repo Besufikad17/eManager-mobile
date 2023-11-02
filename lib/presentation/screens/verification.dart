@@ -113,8 +113,7 @@ class VerificationPage extends StatelessWidget {
             children: [
               MyText(
                 text: "Veri",
-                size: 26,
-                color: "#000000",
+                size: 26
               ),
               MyText(
                 text: "fy",
@@ -131,8 +130,6 @@ class VerificationPage extends StatelessWidget {
             fontSize: 14, 
             height: 40, 
             width: 300, 
-            focusColor: "#000000", 
-            borderColor: "#000000", 
             enabledBorderWidth: 1,
             focusedBorderWidth: 1.5, 
             textEditingController: codeTextField,
@@ -145,6 +142,7 @@ class VerificationPage extends StatelessWidget {
             bgcolor: "#F0922E",
             fgcolor: "#ffffff",
             borderWidth: 2,
+            borderRadius: 5,
             width: 300,
             height: 40,
             onPressed: () {
@@ -168,7 +166,6 @@ class VerificationPage extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             child: MyRichText(
-              primaryColor: "#000000",
               recognizer: () {},
               baseFontSize: 14,
               children: [

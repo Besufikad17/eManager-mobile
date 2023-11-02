@@ -61,23 +61,24 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-    @override
-    Widget build(BuildContext context) {
-      return BlocProvider(
-        create: (context) => ThemeBloc(locator.get<LocalStorageRepositoryImpl>())
-          ..add(const GetTheme()),
-        child: BlocConsumer<ThemeBloc, ThemeState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            if(state is ThemeInitial) {
-              return _buildLoaded(AppTheme.light);
-            } else { 
-              return _buildLoaded(state.appTheme);
-            }
-          },
-        ),
-      );
-    }
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ThemeBloc(locator.get<LocalStorageRepositoryImpl>())
+        ..add(const GetTheme()),
+      child: BlocConsumer<ThemeBloc, ThemeState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          if(state is ThemeInitial) {
+            return _buildLoaded(AppTheme.light);
+          } else if(state is ThemeLoaded) { 
+            return _buildLoaded(state.appTheme);
+          } 
+          return Container();
+        },
+      ),
+    );
+  }
 
   Widget _buildLoaded(theme) {
     return MaterialApp.router(

@@ -150,7 +150,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(const UserLoading());
       final response = await _repository.getUserById(id: event.id, token: event.token);
 
-      if (response is DataSuccess) {
+      if(response is DataSuccess) {
         final user =  User(
           id: int.parse(response.data!.id),
           fname: response.data!.fname,
@@ -159,6 +159,21 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           phoneNumber: response.data!.phonenNumber
         );
         emit(UserLoaded(user, event.token));
+      } else if(response is DataFailed) {
+        emit(UserError(response.message));
+      }
+    });
+
+    on<RemoveUser>((event, emit) async {
+      emit(const UserLoading());
+      final response = await _repository.deleteAccount(
+        id: event.id, 
+        token: event.token
+      );
+
+      if(response is DataSuccess) {
+        locator<LocalStorageRepositoryImpl>().removeLocalResponseData();
+        locator<LocalStorageRepositoryImpl>().removeSettingsData();
       } else if(response is DataFailed) {
         emit(UserError(response.message));
       }

@@ -123,3 +123,13 @@ class GetUserById extends UserEvent {
   @override
   List<Object?> get props => [id, token];
 }
+
+class RemoveUser extends UserEvent {
+  final String id;
+  final String token;
+
+  const RemoveUser(this.id, this.token);
+
+  @override
+  List<Object?> get props => [id, token];
+}

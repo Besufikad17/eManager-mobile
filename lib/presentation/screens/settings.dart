@@ -16,6 +16,7 @@ import 'package:cleanarchdemo/presentation/components/app_bar.dart';
 import 'package:cleanarchdemo/presentation/components/button.dart';
 import 'package:cleanarchdemo/presentation/components/file_picker.dart';
 import 'package:cleanarchdemo/presentation/components/side_bar.dart';
+import 'package:cleanarchdemo/presentation/components/text.dart';
 import 'package:cleanarchdemo/presentation/components/text_field.dart';
 import 'package:cleanarchdemo/utils/constants/enums.dart';
 import 'package:cleanarchdemo/utils/resources/data.dart';
@@ -233,7 +234,7 @@ class SettingsPage extends HookWidget {
                           height: 150
                         ) :
                         Image.network(
-                          images[0],
+                          images.isNotEmpty ? images[0] : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
                           width: 150,
                           height: 150,
                         ),
@@ -286,6 +287,8 @@ class SettingsPage extends HookWidget {
                           height: 35,
                           bgcolor: "#83A598",
                           fgcolor: "#ffffff",
+                          borderColor: "#83A598",
+                          borderRadius: 5,
                           onPressed: () {
                             if(
                               isValidFullName(fullNameTextField.text) && 
@@ -326,7 +329,61 @@ class SettingsPage extends HookWidget {
                           height: 35,
                           bgcolor: "#FB4934",
                           fgcolor: "#ffffff",
-                          onPressed: () {})
+                          borderColor: "#FB4934",
+                          borderRadius: 5,
+                          onPressed: () {
+                            showDialog(
+                              context: context, 
+                              builder: (BuildContext context) {
+                                return MyAlert(
+                                  title: "Alert", 
+                                  type: AlertType.message, 
+                                  body: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      MyText(
+                                        text: "Are you sure you want to delete your account?", 
+                                        size: 13
+                                      ),
+                                      const SizedBox(height: 10,),
+                                      Row(
+                                        children: [
+                                          const SizedBox(width: 15,),
+                                          MyButton(
+                                            text: "Yes", 
+                                            width: 100, 
+                                            height: 35, 
+                                            bgcolor: "#FB4934",
+                                            fgcolor: "#ffffff",
+                                            borderColor: "#FB4934",
+                                            borderRadius: 5,
+                                            onPressed: () {
+                                              userBloc.add(RemoveUser(user.id.toString(), token));
+                                              userBloc.add(const UserLogoutEvent());
+                                              context.router.push(const WelcomeRoute());
+                                            }
+                                          ),
+                                          const SizedBox(width: 20,),
+                                          MyButton(
+                                            text: "No", 
+                                            width: 100, 
+                                            height: 35, 
+                                            bgcolor: "#83A598",
+                                            fgcolor: "#ffffff",
+                                            borderColor: "#83A598",
+                                            borderRadius: 5,
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            }
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                );
+                              }
+                            );
+                          })
                       ],
                     ),
                   ],

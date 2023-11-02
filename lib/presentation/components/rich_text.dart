@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 class MyRichText extends StatelessWidget {
   const MyRichText({
     super.key,
-    required this.primaryColor,
+    this.primaryColor,
     required this.baseFontSize,
     required this.children,
     required this.recognizer
   });
 
-  final String primaryColor;
+  final String? primaryColor;
   final double baseFontSize;
   final List<MyText> children;
   final VoidCallback recognizer;
@@ -22,7 +22,8 @@ class MyRichText extends StatelessWidget {
     return RichText(
         text: TextSpan(
           style: TextStyle(
-            color: getColorFromHex(primaryColor)
+            color: primaryColor != null ? getColorFromHex(primaryColor!) : 
+                   Theme.of(context).colorScheme.onPrimary,
           ),
           children: [
             ...(children.map((myText) =>
@@ -30,7 +31,8 @@ class MyRichText extends StatelessWidget {
                 text: myText.text,
                 recognizer: TapGestureRecognizer()..onTap = recognizer,
                 style: TextStyle(
-                    color: getColorFromHex(myText.color ?? "#000000"),
+                    color: myText.color != null ? getColorFromHex(myText.color!) : 
+                           Theme.of(context).colorScheme.onPrimary,
                     fontSize: myText.size
                 ),
               )

@@ -127,8 +127,7 @@ class LoginPage extends StatelessWidget {
               children: [
                 MyText(
                   text: "Log",
-                  size: 26,
-                  color: "#000000",
+                  size: 26
                 ),
                 MyText(
                     text: "in",
@@ -147,8 +146,6 @@ class LoginPage extends StatelessWidget {
             placeholder: "xyz@email.com", 
             type: "email",
             fontSize: 14,
-            focusColor: "#000000",
-            borderColor: "#000000",
             enabledBorderWidth: 1,
             focusedBorderWidth: 1.5,
             regexChecker: isValidEmail,
@@ -161,8 +158,6 @@ class LoginPage extends StatelessWidget {
             placeholder: "password", 
             type: "password",
             fontSize: 14,
-            focusColor: "#000000",
-            borderColor: "#000000",
             enabledBorderWidth: 1,
             focusedBorderWidth: 1.5,
             regexChecker: isValidPassword,
@@ -177,6 +172,7 @@ class LoginPage extends StatelessWidget {
             bgcolor: "#F0922E",
             fgcolor: "#ffffff",
             borderWidth: 2,
+            borderRadius: 5,
             width: 300,
             height: 40,
             onPressed: () {
@@ -216,7 +212,6 @@ class LoginPage extends StatelessWidget {
             child: MyText(
                 text: "Forgot password?",
                 size: 12,
-                color: "#000000",
                 isUnderline: true,
             ),
           )

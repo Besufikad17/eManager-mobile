@@ -113,7 +113,7 @@ class MySideBar extends StatelessWidget {
             child: ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(75)),
               child: Image.network(
-                images[0],
+                images.isNotEmpty ? images[0] : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
                 width: 150,
                 height: 150,
               ),

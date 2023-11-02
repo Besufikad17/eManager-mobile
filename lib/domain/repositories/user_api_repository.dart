@@ -3,6 +3,7 @@ import 'package:cleanarchdemo/domain/models/requests/edit_profile_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/forgot_password_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/verification_request.dart';
 import 'package:cleanarchdemo/domain/models/responses/change_password_response.dart';
+import 'package:cleanarchdemo/domain/models/responses/delete_account_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/edit_profile_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/forgot_password_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/get_pfp_response.dart';
@@ -47,6 +48,11 @@ abstract class UserApiRepository {
   });
 
   Future<DataState<GetUserByIdResponse>> getUserById({
+    required String id,
+    required String token
+  });
+
+  Future<DataState<DeleteAccountResponse>> deleteAccount({
     required String id,
     required String token
   });

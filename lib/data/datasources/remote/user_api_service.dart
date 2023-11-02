@@ -3,6 +3,7 @@ import 'package:cleanarchdemo/domain/models/requests/edit_profile_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/forgot_password_request.dart';
 import 'package:cleanarchdemo/domain/models/requests/verification_request.dart';
 import 'package:cleanarchdemo/domain/models/responses/change_password_response.dart';
+import 'package:cleanarchdemo/domain/models/responses/delete_account_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/edit_profile_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/forgot_password_response.dart';
 import 'package:cleanarchdemo/domain/models/responses/get_pfp_response.dart';
@@ -62,6 +63,12 @@ abstract class UserApiService {
 
   @GET('/images/{id}')
   Future<HttpResponse<GetPFPResponse>> getPFPs({
+    @Path() required String id,
+    @Header('Authorization') required String token,
+  });
+
+  @DELETE('/delete_profile/{id}')
+  Future<HttpResponse<DeleteAccountResponse>> deleteAcount({
     @Path() required String id,
     @Header('Authorization') required String token,
   });
