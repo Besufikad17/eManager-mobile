@@ -3,7 +3,11 @@ import 'package:cleanarchdemo/utils/constants/enums.dart';
 
 class Employee extends Equatable {
   final int? id;
-  final String? name;
+  final String? fname;
+  final String? lname;
+  final String? profilePictureUrl;
+  final String? email;
+  final String? phoneNumber;
   final String? dept;
   final DateTime? dateOfBirth;
   final double? salary;
@@ -11,7 +15,11 @@ class Employee extends Equatable {
 
   const Employee({
     this.id,
-    this.name,
+    this.fname,
+    this.lname,
+    this.profilePictureUrl,
+    this.email,
+    this.phoneNumber,
     this.dept,
     this.dateOfBirth,
     this.salary,
@@ -21,7 +29,11 @@ class Employee extends Equatable {
   factory Employee.fromJSON(Map<String, dynamic> json) {
     return Employee(
       id: json['id'],
-      name: json['name'],
+      fname: json['fname'],
+      lname: json['lname'],
+      profilePictureUrl: json['profilePictureUrl'],
+      email: json['email'],
+      phoneNumber: json['phoneNumber'],
       dept: json['dept'],
       dateOfBirth: json['dateOfBirth'],
       salary: json['salary'],
@@ -31,7 +43,7 @@ class Employee extends Equatable {
 
   @override
   String toString() {
-    return "$name";
+    return "$fname $lname";
   }
 
   @override
@@ -40,7 +52,11 @@ class Employee extends Equatable {
   @override
   List<Object?> get props => [
     id, 
-    name, 
+    fname,
+    lname,
+    profilePictureUrl,
+    email,
+    phoneNumber, 
     dept, 
     dateOfBirth,
     salary,
